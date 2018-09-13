@@ -1,0 +1,72 @@
+package com.zccoder.demo.spring.factory.proxy;
+
+import com.zccoder.demo.spring.factory.producer.DefaultProxyProducer;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import java.lang.reflect.Proxy;
+
+/**
+ * 标题：生产者工厂Bean<br>
+ * 描述：生产者工厂Bean<br>
+ * 时间：2018/06/28<br>
+ *
+ * @author zc
+ **/
+public class ProxyProducerFactoryBean implements FactoryBean<ProxyProducer>, ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+    private ProxyProducerConfig config;
+    private ProxyProducerWrapper wrapper;
+    private ProxyProducer proxyProducer;
+    private ProxyProducerStrategy localStrategy;
+
+    @Override
+    public ProxyProducer getObject() throws Exception {
+        config = applicationContext.getBean(ProxyProducerConfig.class);
+        if (config == null) {
+            throw new BeanCreationException("缺少配置类：ProxyProducerConfig");
+        }
+        if (config.getEnable() == null) {
+            config.setEnable(false);
+        }
+        if (!config.getEnable()) {
+            return new DefaultProxyProducer();
+        }
+        if (proxyProducer != null) {
+            return proxyProducer;
+        }
+
+        if (localStrategy == null) {
+            // 如果单个生产者未配置消息策略，则使用全局消息策略
+            localStrategy = config;
+        }
+        wrapper = new ProxyProducerWrapper(localStrategy);
+
+        proxyProducer = (ProxyProducer) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{ProxyProducer.class}, (proxy, method, args) -> method.invoke(wrapper, args));
+
+        return proxyProducer;
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return ProxyProducer.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    public void setProxyProducerStrategy(ProxyProducerStrategy proxyProducerStrategy) {
+        this.localStrategy = proxyProducerStrategy;
+    }
+}

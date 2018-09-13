@@ -8,12 +8,9 @@
 
 使用Spring Boot 和 Redis 实现消息发布订阅
 
-### 2018-2018062801：02-ch02-spring<br>
+### 2018-2018062801：02-spring<br>
 
-#### Spring学习
-<p>
-Spring Enable注解学习
-</p>
+使用FactoryBean创建Bean、@Enable动态注册Bean、结合FactoryBean、@Enable、策略模式开发插件
 
 ### 2018-2018070501：03-ch03-log<br>
 
