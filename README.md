@@ -16,10 +16,7 @@
 
 log4j2 配置学习
 
-### 2018-2018070601：ch04-fastdfs<br>
+### 2018-2018070601：04-fastdfs<br>
 
-#### FastDFS学习
-<p>
 使用Spring Boot集成FastDFS
-</p>
 

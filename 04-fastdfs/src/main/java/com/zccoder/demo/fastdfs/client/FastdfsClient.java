@@ -1,6 +1,6 @@
 package com.zccoder.demo.fastdfs.client;
 
-import com.zccoder.demo.fastdfs.domain.FastDFSFile;
+import com.zccoder.demo.fastdfs.domain.FastdfsFile;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ import java.io.InputStream;
  *
  * @author zc
  **/
-public class FastDFSClient {
+public class FastdfsClient {
 
-    private static Logger logger = LoggerFactory.getLogger(FastDFSClient.class);
+    private static Logger logger = LoggerFactory.getLogger(FastdfsClient.class);
 
     static{
         try {
@@ -29,18 +29,18 @@ public class FastDFSClient {
             logger.error("FastDFS Client Init Fail!",e);
         }
     }
-    public static String[] upload(FastDFSFile file) {
+    public static String[] upload(FastdfsFile file) {
         logger.info("File Name: " + file.getName() + "File Length:" + file.getContent().length);
 
-        NameValuePair[] meta_list = new NameValuePair[1];
-        meta_list[0] = new NameValuePair("author", file.getAuthor());
+        NameValuePair[] metaList = new NameValuePair[1];
+        metaList[0] = new NameValuePair("author", file.getAuthor());
 
         long startTime = System.currentTimeMillis();
         String[] uploadResults = null;
         StorageClient storageClient=null;
         try {
             storageClient = getTrackerClient();
-            uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), meta_list);
+            uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), metaList);
         } catch (IOException e) {
             logger.error("IO Exception when uploadind the file:" + file.getName(), e);
         } catch (Exception e) {

@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Bean;
  * @author zc
  **/
 @SpringBootApplication
-public class ApplicationStart {
+public class FastdfsStart {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApplicationStart.class, args);
+        SpringApplication.run(FastdfsStart.class, args);
     }
 
     /**

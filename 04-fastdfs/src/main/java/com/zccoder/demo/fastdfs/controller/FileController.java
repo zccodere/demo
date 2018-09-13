@@ -1,7 +1,7 @@
 package com.zccoder.demo.fastdfs.controller;
 
-import com.zccoder.demo.fastdfs.client.FastDFSClient;
-import com.zccoder.demo.fastdfs.domain.FastDFSFile;
+import com.zccoder.demo.fastdfs.client.FastdfsClient;
+import com.zccoder.demo.fastdfs.domain.FastdfsFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -90,10 +90,8 @@ public class FileController {
 
     @RequestMapping("down")
     public void download(String group, String file, HttpServletResponse res){
-        InputStream inputStream = FastDFSClient.downFile(group,file);
+        InputStream inputStream = FastdfsClient.downFile(group,file);
         String fileName = file;
-//        res.setHeader("content-type", "application/octet-stream");
-//        res.setContentType("application/octet-stream");
         res.setContentType("application/force-download");
         res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         byte[] buff = new byte[1024];
@@ -132,24 +130,25 @@ public class FileController {
         String[] fileAbsolutePath={};
         String fileName=multipartFile.getOriginalFilename();
         String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
-        byte[] file_buff = null;
+        byte[] fileBuff = null;
         InputStream inputStream=multipartFile.getInputStream();
         if(inputStream!=null){
             int len1 = inputStream.available();
-            file_buff = new byte[len1];
-            inputStream.read(file_buff);
+            fileBuff = new byte[len1];
+            inputStream.read(fileBuff);
         }
         inputStream.close();
-        FastDFSFile file = new FastDFSFile(fileName, file_buff, ext);
+        FastdfsFile file = new FastdfsFile(fileName, fileBuff, ext);
         try {
-            fileAbsolutePath = FastDFSClient.upload(file);  //upload to fastdfs
+            //upload to fastdfs
+            fileAbsolutePath = FastdfsClient.upload(file);
         } catch (Exception e) {
             log.error("upload file Exception!",e);
         }
         if (fileAbsolutePath==null) {
             log.error("upload file failed,please upload again!");
         }
-        String path=FastDFSClient.getTrackerUrl()+fileAbsolutePath[0]+ "/"+fileAbsolutePath[1];
+        String path= FastdfsClient.getTrackerUrl()+fileAbsolutePath[0]+ "/"+fileAbsolutePath[1];
         return path;
     }
 }

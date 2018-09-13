@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author zc
  **/
-public class FastDFSFile{
+public class FastdfsFile {
     /**
      * 文件名称
      */
@@ -31,10 +31,10 @@ public class FastDFSFile{
      */
     private String author;
 
-    public FastDFSFile() {
+    public FastdfsFile() {
     }
 
-    public FastDFSFile(String name, byte[] content, String ext) {
+    public FastdfsFile(String name, byte[] content, String ext) {
         this.name = name;
         this.content = content;
         this.ext = ext;
@@ -42,7 +42,7 @@ public class FastDFSFile{
 
     @Override
     public String toString() {
-        return "FastDFSFile{" +
+        return "FastdfsFile{" +
                 "name='" + name + '\'' +
                 ", content=" + Arrays.toString(content) +
                 ", ext='" + ext + '\'' +
