@@ -12,12 +12,9 @@
 
 使用FactoryBean创建Bean、@Enable动态注册Bean、结合FactoryBean、@Enable、策略模式开发插件
 
-### 2018-2018070501：03-ch03-log<br>
+### 2018-2018070501：03-log4j2<br>
 
-#### Log4j学习
-<p>
-Log4j 2 学习
-</p>
+log4j2 配置学习
 
 ### 2018-2018070601：ch04-fastdfs<br>
 

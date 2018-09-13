@@ -22,7 +22,7 @@
     <modules>
         <module>01-redis-mq</module>
         <module>02-spring</module>
-        <!--<module>ch03-log</module>-->
+        <module>03-log4j2</module>
         <!--<module>ch04-fastdfs</module>-->
     </modules>
 
@@ -47,6 +47,19 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <!--源码打包插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -6,8 +6,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.zccoder.demo.log.log4j.DemoService" level="WARN"/>
-        <Logger name="com.zccoder.demo.log.log4j.UserService" level="DEBUG"/>
+        <Logger name="com.zccoder.demo.log4j2.service.DemoService" level="WARN"/>
+        <Logger name="com.zccoder.demo.log4j2.service.UserService" level="DEBUG"/>
         <Root level="INFO">
             <AppenderRef ref="Console"/>
         </Root>
