@@ -1,0 +1,28 @@
+	// 常量定义
+    ext {
+	    demoCommonAllName = "${projectName}-common-all"
+	    version = "${projectVersion}"
+	    builtBy="gradle 3.3"			    
+    }
+    
+    task demoCommonAllJar(type:Jar){
+        baseName "${demoCommonAllName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/common/**'
+        manifest {
+        	attributes 'packageName': "${demoCommonAllName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+	
+	artifacts { archives demoCommonAllJar}
+
+    publishing {
+        publications {
+            demoCommonAll(MavenPublication) {
+                groupId group
+                artifactId "${demoCommonAllName}"
+                version "${projectVersion}"
+                artifact  demoCommonAllJar
+            }
+        }
+    }

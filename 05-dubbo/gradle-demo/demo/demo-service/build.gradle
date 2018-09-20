@@ -1,0 +1,88 @@
+	
+	dependencies {
+		compile('com.zccoder.demo:demo-common-all:1.0.0-SNAPSHOT')
+		compile('com.zccoder.demo:demo-dao-api:1.0.0-SNAPSHOT')
+		compile('com.zccoder.demo:demo-dao-po:1.0.0-SNAPSHOT')
+		
+		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		
+		compile ('com.alibaba:dubbo:2.4.10') {
+			exclude group: 'org.springframework', module: 'spring'
+		}
+		
+		compile ('com.101tec:zkclient:0.4'){
+			exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+		}
+		compile ('org.apache.zookeeper:zookeeper:3.4.6'){
+			exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+		}
+		
+		runtime('mysql:mysql-connector-java')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	// 常量定义
+    ext {
+	    demoServiceApiName = "${projectName}-service-api"
+	    demoServiceBoName = "${projectName}-service-bo"
+	    demoServiceAllName = "${projectName}-service-all"
+	    version = "${projectVersion}"
+	    builtBy="gradle 3.3"			    
+    }
+	
+    task demoServiceApiJar(type:Jar){
+        baseName "${demoServiceApiName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/service/**/api/**'
+        manifest {
+            attributes 'packageName': "${demoServiceApiName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+  
+    task demoServiceBoJar(type:Jar){
+        baseName "${demoServiceBoName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/service/**/bo/**'
+        manifest {
+            attributes 'packageName': "${demoServiceBoName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+    
+    task demoServiceAllJar(type:Jar){
+        baseName "${demoServiceAllName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/service/**'
+        manifest {
+        	attributes 'packageName': "${demoServiceAllName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+	
+	// publishToMavenLocal 命令时，执行自定义打包任务 demoServiceApiJar
+	artifacts { archives demoServiceApiJar}
+	artifacts { archives demoServiceBoJar}
+	artifacts { archives demoServiceAllJar}
+	
+    publishing {
+    	// 将jar包发布到本地maven仓库
+        publications {
+            demoServiceApi(MavenPublication) {
+                groupId group
+                artifactId "${demoServiceApiName}"
+                version "${projectVersion}"
+                artifact  demoServiceApiJar
+            }
+            demoServiceBo(MavenPublication) {
+                groupId group
+                artifactId "${demoServiceBoName}"
+                version "${projectVersion}"
+                artifact  demoServiceBoJar
+            }
+            demoServiceAll(MavenPublication) {
+                groupId group
+                artifactId "${demoServiceAllName}"
+                version "${projectVersion}"
+                artifact  demoServiceAllJar
+            }
+        }
+    }

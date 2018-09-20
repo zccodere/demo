@@ -1,0 +1,70 @@
+	
+	// 子模块所需依赖
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	}
+	
+	// 常量定义
+    ext {
+	    demoDaoApiName = "${projectName}-dao-api"
+	    demoDaoPoName = "${projectName}-dao-po"
+	    demoDaoAllName = "${projectName}-dao-all"
+	    version = "${projectVersion}"
+	    builtBy="gradle 3.3"			    
+    }
+	
+    task demoDaoApiJar(type:Jar){
+        baseName "${demoDaoApiName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/dao/**/repository/**'
+        manifest {
+            attributes 'packageName': "${demoDaoApiName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+    
+    task demoDaoPoJar(type:Jar){
+        baseName "${demoDaoPoName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/dao/**/po/**'
+        manifest {
+            attributes 'packageName': "${demoDaoPoName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+    
+    task demoDaoAllJar(type:Jar){
+        baseName "${demoDaoAllName}"
+        from sourceSets.main.output
+        include 'com/zccoder/demo/dao/**'
+        manifest {
+        	attributes 'packageName': "${demoDaoAllName}",'Built-By': "${builtBy}",'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':version
+        }
+    }
+	
+	// publishToMavenLocal 命令时，执行自定义打包任务 demoDaoApiJar
+	artifacts { archives demoDaoApiJar}
+	artifacts { archives demoDaoPoJar}
+	artifacts { archives demoDaoAllJar}
+
+    publishing {
+    	// 将jar包发布到本地maven仓库
+        publications {
+            demoDaoApi(MavenPublication) {
+                groupId group
+                artifactId "${demoDaoApiName}"
+                version "${projectVersion}"
+                artifact  demoDaoApiJar
+            }
+            demoDaoPo(MavenPublication) {
+                groupId group
+                artifactId "${demoDaoPoName}"
+                version "${projectVersion}"
+                artifact  demoDaoPoJar
+            }
+            demoDaoAll(MavenPublication) {
+                groupId group
+                artifactId "${demoDaoAllName}"
+                version "${projectVersion}"
+                artifact  demoDaoAllJar
+            }
+        }
+    }

@@ -1,0 +1,47 @@
+// 使用SpringBoot插件
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+// 所有子项目的通用配置
+subprojects {	
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven-publish'
+	apply plugin: 'org.springframework.boot'
+	
+	group 'com.zccoder.demo'
+	version = '1.0.0-SNAPSHOT'
+	
+	[compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+	
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	
+	// 全局常量
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+		projectName = 'demo'// 项目名称
+		projectVersion = '1.0.0-SNAPSHOT'// 项目版本
+	}
+	
+	repositories {
+		mavenLocal()
+		maven{ url "http://maven.aliyun.com/nexus/content/groups/public" }
+		mavenCentral()
+	}
+	
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-web')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+}

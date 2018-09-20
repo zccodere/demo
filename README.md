@@ -20,3 +20,6 @@ log4j2 配置学习
 
 使用Spring Boot集成FastDFS
 
+### 2017-2017091501：05-dubbo<br>
+
+使用Spring Boot集成Dubbo、JPA简化数据访问

@@ -1,0 +1,18 @@
+	
+	dependencies {
+		
+		compile('com.zccoder.demo:demo-common-all:1.0.0-SNAPSHOT')
+		compile('com.zccoder.demo:demo-service-api:1.0.0-SNAPSHOT')
+		compile('com.zccoder.demo:demo-service-bo:1.0.0-SNAPSHOT')
+		
+		compile ('com.alibaba:dubbo:2.4.10') {
+			exclude group: 'org.springframework', module: 'spring'
+		}
+		
+		compile ('com.101tec:zkclient:0.4'){
+			exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+		}
+		compile ('org.apache.zookeeper:zookeeper:3.4.6'){
+			exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+		}
+	}

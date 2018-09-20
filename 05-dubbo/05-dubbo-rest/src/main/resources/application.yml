@@ -1,0 +1,5 @@
+server:
+    port: 8080
+dubbo: 
+  registry: 
+    address: zookeeper://localhost:2181
