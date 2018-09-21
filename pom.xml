@@ -25,6 +25,7 @@
         <module>03-log4j2</module>
         <module>04-fastdfs</module>
         <module>05-dubbo</module>
+        <module>06-sftp</module>
     </modules>
 
     <build>
