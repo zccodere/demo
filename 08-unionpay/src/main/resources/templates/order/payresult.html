@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>支付测试</title>
+</head>
+<body>
+
+<h2>前台回调支付结果：</h2>
+
+成功时：
+<br/>
+支付订单号：<span th:text="${payOrderId}"></span><br/>
+银联支付流水号：<span th:text="${payTransId}"></span><br/>
+交易时间：<span th:text="${tradeTime}"></span><br/>
+交易说明：<span th:text="${message}"></span><br/>
+
+<hr/>
+
+失败时：
+<br/>
+交易结果：<span th:text="${result}"></span>
+
+</body>
+</html>

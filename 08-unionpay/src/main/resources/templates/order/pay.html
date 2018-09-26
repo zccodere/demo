@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>支付测试</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/pay/order}" method="post">
+    <p>
+        <label>商户号：</label>
+        <input id="merId" type="text" name="merId" placeholder="" value="777290058110048"
+               title="商户号码（商户号码777290058110097仅做为测试调通交易使用，该商户号配置了需要对敏感信息加密）测试时请改成自己申请的商户号，【自己注册的测试777开头的商户号不支持代收产品】"
+               required="required"/>
+    </p>
+    <p>
+        <label>交易金额：</label>
+        <input id="txnAmt" type="text" name="txnAmt" placeholder="交易金额" value="1000" title="单位为分,不能带小数点 "
+               required="required"/>
+    </p>
+    <p>
+        <label>订单发送时间：</label>
+        <input id="txnTime" type="text" name="txnTime" placeholder="订单发送时间，YYYYMMDDhhmmss格式"
+               value="" title="取北京时间,，YYYYMMDDhhmmss格式"
+        required="required"/>
+    </p>
+    <p>
+        <label>商户订单号：</label>
+        <input id="orderId" type="text" name="orderId" placeholder="商户订单号" value="" required="required"/>
+    </p>
+    <p>
+        <label>&nbsp;</label>
+        <input type="submit" class="button" value="提交"/>
+        <input type="button" class="showFaqBtn" value="遇到问题？"/>
+    </p>
+</form>
+
+</body>
+</html>

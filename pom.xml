@@ -27,6 +27,7 @@
         <module>05-dubbo</module>
         <module>06-sftp</module>
         <module>07-spring-aop</module>
+        <module>08-unionpay</module>
     </modules>
 
     <build>
