@@ -1,6 +1,5 @@
 package com.zccoder.demo.unionpay.controller;
 
-import com.zccoder.demo.unionpay.constant.UnionpayConstants;
 import com.zccoder.demo.unionpay.sdk.AcpService;
 import com.zccoder.demo.unionpay.sdk.LogUtil;
 import com.zccoder.demo.unionpay.sdk.SdkConstants;
@@ -43,7 +42,7 @@ public class PayController {
 
         LogUtil.writeLog("前台接收报文返回开始");
 
-        String encoding = request.getParameter(SdkConstants.param_encoding);
+        String encoding = request.getParameter(SdkConstants.PARAM_ENCODING);
         LogUtil.writeLog("返回报文中encoding=[" + encoding + "]");
 
         Map<String, String> respParam = HtmlUtils.getAllRequestParam(request);

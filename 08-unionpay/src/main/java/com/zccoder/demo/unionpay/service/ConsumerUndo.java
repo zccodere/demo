@@ -82,12 +82,13 @@ public class ConsumerUndo {
             if (AcpService.validate(rspData, UnionpayConstants.ENCODING)) {
                 LogUtil.writeLog("验证签名成功");
                 String respCode = rspData.get("respCode");
-                if ("00".equals(respCode)) {
+                String code00 = "00";
+                String code03 = "03";
+                if (code00.equals(respCode)) {
                     //交易已受理(不代表交易已成功），等待接收后台通知确定交易成功，也可以主动发起 查询交易确定交易状态。
                     System.out.println("respCode = 00");
                     System.out.println("交易已受理，等待接收通知成功 或 主动查询确定交易状态");
-
-                } else if ("03".equals(respCode) ||
+                } else if (code03.equals(respCode) ||
                         "04".equals(respCode) ||
                         "05".equals(respCode)) {
                     //后续需发起交易状态查询交易确定交易状态。

@@ -1,17 +1,3 @@
-/**
- * Licensed Property to China UnionPay Co., Ltd.
- * <p>
- * (C) Copyright of China UnionPay Co., Ltd. 2010
- * All Rights Reserved.
- * <p>
- * <p>
- * Modification History:
- * =============================================================================
- * Author         Date          Description
- * ------------ ---------- ---------------------------------------------------
- * xshu       2014-05-28       HTTP通信工具类
- * =============================================================================
- */
 package com.zccoder.demo.unionpay.sdk;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -21,12 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
+ * 标题：HttpClient<br>
+ * 描述：acp sdk 发送后台http请求类<br>
+ * 时间：2018/09/27<br>
  *
- * @ClassName HttpClient
- * @Description acpsdk发送后台http请求类
- * @date 2016-7-22 下午4:03:25
- * 声明：以下代码只是为了方便接入方测试而提供的样例代码，商户可以根据自己需要，按照技术文档编写。该代码仅供参考，不提供编码，性能，规范性等方面的保障
- */
+ * @author zc
+ **/
 public class HttpClient {
     /**
      * 目标地址
@@ -50,6 +36,7 @@ public class HttpClient {
 
     /**
      * 获取通信结果
+     *
      * @return
      */
     public String getResult() {
@@ -58,6 +45,7 @@ public class HttpClient {
 
     /**
      * 设置通信结果
+     *
      * @param result
      */
     public void setResult(String result) {
@@ -66,9 +54,10 @@ public class HttpClient {
 
     /**
      * 构造函数
-     * @param url 目标地址
+     *
+     * @param url               目标地址
      * @param connectionTimeout HTTP连接超时时间
-     * @param readTimeOut HTTP读写超时时间
+     * @param readTimeOut       HTTP读写超时时间
      */
     public HttpClient(String url, int connectionTimeout, int readTimeOut) {
         try {
@@ -82,6 +71,7 @@ public class HttpClient {
 
     /**
      * 发送信息到服务端
+     *
      * @param data
      * @param encoding
      * @return
@@ -107,6 +97,7 @@ public class HttpClient {
 
     /**
      * 发送信息到服务端 GET方式
+     *
      * @param encoding
      * @return HTTP 响应码
      * @throws Exception
@@ -165,7 +156,8 @@ public class HttpClient {
         StringBuilder sb = new StringBuilder(1024);
         BufferedReader br = null;
         try {
-            if (200 == connection.getResponseCode()) {
+            int success = 200;
+            if (success == connection.getResponseCode()) {
                 in = connection.getInputStream();
                 sb.append(new String(read(in), encoding));
             } else {
@@ -215,20 +207,27 @@ public class HttpClient {
             LogUtil.writeErrorLog(e.getMessage(), e);
             return null;
         }
-        httpURLConnection.setConnectTimeout(this.connectionTimeout);// 连接超时时间
-        httpURLConnection.setReadTimeout(this.readTimeOut);// 读取结果超时时间
-        httpURLConnection.setDoInput(true); // 可读
-        httpURLConnection.setDoOutput(true); // 可写
-        httpURLConnection.setUseCaches(false);// 取消缓存
+        // 连接超时时间
+        httpURLConnection.setConnectTimeout(this.connectionTimeout);
+        // 读取结果超时时间
+        httpURLConnection.setReadTimeout(this.readTimeOut);
+        // 可读
+        httpURLConnection.setDoInput(true);
+        // 可写
+        httpURLConnection.setDoOutput(true);
+        // 取消缓存
+        httpURLConnection.setUseCaches(false);
         httpURLConnection.setRequestProperty("Content-type",
                 "application/x-www-form-urlencoded;charset=" + encoding);
         httpURLConnection.setRequestMethod("POST");
-        if ("https".equalsIgnoreCase(url.getProtocol())) {
+        String https = "https";
+        if (https.equalsIgnoreCase(url.getProtocol())) {
             HttpsURLConnection husn = (HttpsURLConnection) httpURLConnection;
             //是否验证https证书，测试环境请设置false，生产环境建议优先尝试true，不行再false
             if (!SdkConfig.getConfig().isIfValidateRemoteCert()) {
                 husn.setSSLSocketFactory(new BaseHttpSslSocketFactory());
-                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());//解决由于服务器证书问题导致HTTPS无法访问的情况
+                //解决由于服务器证书问题导致HTTPS无法访问的情况
+                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());
             }
             return husn;
         }
@@ -249,18 +248,23 @@ public class HttpClient {
             LogUtil.writeErrorLog(e.getMessage(), e);
             return null;
         }
-        httpURLConnection.setConnectTimeout(this.connectionTimeout);// 连接超时时间
-        httpURLConnection.setReadTimeout(this.readTimeOut);// 读取结果超时时间
-        httpURLConnection.setUseCaches(false);// 取消缓存
+        // 连接超时时间
+        httpURLConnection.setConnectTimeout(this.connectionTimeout);
+        // 读取结果超时时间
+        httpURLConnection.setReadTimeout(this.readTimeOut);
+        // 取消缓存
+        httpURLConnection.setUseCaches(false);
         httpURLConnection.setRequestProperty("Content-type",
                 "application/x-www-form-urlencoded;charset=" + encoding);
         httpURLConnection.setRequestMethod("GET");
-        if ("https".equalsIgnoreCase(url.getProtocol())) {
+        String https = "https";
+        if (https.equalsIgnoreCase(url.getProtocol())) {
             HttpsURLConnection husn = (HttpsURLConnection) httpURLConnection;
             //是否验证https证书，测试环境请设置false，生产环境建议优先尝试true，不行再false
             if (!SdkConfig.getConfig().isIfValidateRemoteCert()) {
+                //解决由于服务器证书问题导致HTTPS无法访问的情况
+                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());
                 husn.setSSLSocketFactory(new BaseHttpSslSocketFactory());
-                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());//解决由于服务器证书问题导致HTTPS无法访问的情况
             }
             return husn;
         }

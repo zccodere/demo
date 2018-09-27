@@ -26,11 +26,12 @@ import static com.zccoder.demo.unionpay.sdk.SdkConstants.UNIONPAY_CNNAME;
 import static com.zccoder.demo.unionpay.sdk.SdkUtil.isEmpty;
 
 /**
- * @ClassName: CertUtil
- * @Description: acpsdk证书工具类，主要用于对证书的加载和使用
- * @date 2016-7-22 下午2:46:20
- * 声明：以下代码只是为了方便接入方测试而提供的样例代码，商户可以根据自己需要，按照技术文档编写。该代码仅供参考，不提供编码，性能，规范性等方面的保障
- */
+ * 标题：CertUtil<br>
+ * 描述：acp sdk 证书工具类，主要用于对证书的加载和使用<br>
+ * 时间：2018/09/27<br>
+ *
+ * @author zc
+ **/
 public class CertUtil {
     /**
      * 证书容器，存储对商户请求报文签名私钥证书.
@@ -63,7 +64,7 @@ public class CertUtil {
     /**
      * 商户私钥存储Map
      */
-    private final static Map<String, KeyStore> keyStoreMap = new ConcurrentHashMap<String, KeyStore>();
+    private final static Map<String, KeyStore> KEY_STORE_MAP = new ConcurrentHashMap<String, KeyStore>(16);
 
     static {
         init();
@@ -90,11 +91,13 @@ public class CertUtil {
      * 添加签名，验签，加密算法提供者
      */
     private static void addProvider() {
-        if (Security.getProvider("BC") == null) {
+        String name = "BC";
+        if (Security.getProvider(name) == null) {
             LogUtil.writeLog("add BC provider");
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         } else {
-            Security.removeProvider("BC"); //解决eclipse调试时tomcat自动重新加载时，BC存在不明原因异常的问题。
+            //解决eclipse调试时tomcat自动重新加载时，BC存在不明原因异常的问题。
+            Security.removeProvider(name);
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             LogUtil.writeLog("re-add BC provider");
         }
@@ -105,7 +108,7 @@ public class CertUtil {
      * 用配置文件acp_sdk.properties中配置的私钥路径和密码 加载签名证书
      */
     private static void initSignCert() {
-        if (!"01".equals(SdkConfig.getConfig().getSignMethod())) {
+        if (!SdkConstants.SIGNMETHOD_RSA.equals(SdkConfig.getConfig().getSignMethod())) {
             LogUtil.writeLog("非rsa签名方式，不加载签名证书。");
             return;
         }
@@ -187,7 +190,7 @@ public class CertUtil {
      * 用配置文件acp_sdk.properties配置路径 加载验证签名证书
      */
     private static void initValidateCertFromDir() {
-        if (!"01".equals(SdkConfig.getConfig().getSignMethod())) {
+        if (!SdkConstants.SIGNMETHOD_RSA.equals(SdkConfig.getConfig().getSignMethod())) {
             LogUtil.writeLog("非rsa签名方式，不加载验签证书。");
             return;
         }
@@ -252,7 +255,7 @@ public class CertUtil {
         KeyStore keyStore = null;
         try {
             keyStore = getKeyInfo(certFilePath, certPwd, "PKCS12");
-            keyStoreMap.put(certFilePath, keyStore);
+            KEY_STORE_MAP.put(certFilePath, keyStore);
             LogUtil.writeLog("LoadRsaCert Successful");
         } catch (IOException e) {
             LogUtil.writeErrorLog("LoadRsaCert Error", e);
@@ -328,17 +331,17 @@ public class CertUtil {
      */
     public static PrivateKey getSignCertPrivateKeyByStoreMap(String certPath,
                                                              String certPwd) {
-        if (!keyStoreMap.containsKey(certPath)) {
+        if (!KEY_STORE_MAP.containsKey(certPath)) {
             loadSignCert(certPath, certPwd);
         }
         try {
-            Enumeration<String> aliasenum = keyStoreMap.get(certPath)
+            Enumeration<String> aliasenum = KEY_STORE_MAP.get(certPath)
                     .aliases();
             String keyAlias = null;
             if (aliasenum.hasMoreElements()) {
                 keyAlias = aliasenum.nextElement();
             }
-            PrivateKey privateKey = (PrivateKey) keyStoreMap.get(certPath)
+            PrivateKey privateKey = (PrivateKey) KEY_STORE_MAP.get(certPath)
                     .getKey(keyAlias, certPwd.toCharArray());
             return privateKey;
         } catch (KeyStoreException e) {
@@ -500,11 +503,11 @@ public class CertUtil {
      * @return
      */
     public static String getCertIdByKeyStoreMap(String certPath, String certPwd) {
-        if (!keyStoreMap.containsKey(certPath)) {
+        if (!KEY_STORE_MAP.containsKey(certPath)) {
             // 缓存中未查询到,则加载RSA证书
             loadSignCert(certPath, certPwd);
         }
-        return getCertIdIdByStore(keyStoreMap.get(certPath));
+        return getCertIdIdByStore(KEY_STORE_MAP.get(certPath));
     }
 
     /**
@@ -615,10 +618,12 @@ public class CertUtil {
         String tDN = aCert.getSubjectDN().toString();
         String tPart = "";
         if ((tDN != null)) {
-            String tSplitStr[] = tDN.substring(tDN.indexOf("CN=")).split("@");
-            if (tSplitStr != null && tSplitStr.length > 2
-                    && tSplitStr[2] != null)
+            String[] tSplitStr = tDN.substring(tDN.indexOf("CN=")).split("@");
+            int length = 2;
+            if (tSplitStr != null && tSplitStr.length > length
+                    && tSplitStr[2] != null) {
                 tPart = tSplitStr[2];
+            }
         }
         return tPart;
     }
@@ -697,8 +702,8 @@ public class CertUtil {
             return false;
         }
         try {
-            cert.checkValidity();//验证有效期
-//			cert.verify(middleCert.getPublicKey());
+            //验证有效期
+            cert.checkValidity();
             if (!verifyCertificateChain(cert)) {
                 return false;
             }
@@ -764,7 +769,8 @@ public class CertUtil {
      */
     static class CerFilter implements FilenameFilter {
         public boolean isCer(String name) {
-            if (name.toLowerCase().endsWith(".cer")) {
+            String suffix  = ".cer";
+            if (name.toLowerCase().endsWith(suffix)) {
                 return true;
             } else {
                 return false;
