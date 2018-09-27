@@ -25,9 +25,11 @@
         <module>03-log4j2</module>
         <module>04-fastdfs</module>
         <module>05-dubbo</module>
+
         <module>06-sftp</module>
         <module>07-spring-aop</module>
         <module>08-unionpay</module>
+        <module>09-pay</module>
     </modules>
 
     <build>
