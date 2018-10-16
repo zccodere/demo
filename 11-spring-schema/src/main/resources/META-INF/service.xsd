@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.zccoder.com/schema/service"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:beans="http://www.springframework.org/schema/beans"
+            targetNamespace="http://www.zccoder.com/schema/service">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.springframework.org/schema/beans"/>
+
+    <xsd:complexType name="serviceType">
+        <xsd:attribute name="id" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[ 服务ID ]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="interface" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[ 服务接口全类名 ]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="ref" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[ 服务实例 ]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+    
+    <xsd:element name="service" type="serviceType">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[ Export service default config ]]></xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+</xsd:schema>

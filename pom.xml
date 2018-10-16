@@ -31,6 +31,8 @@
         <module>08-unionpay</module>
         <module>09-pay</module>
         <module>10-cloud</module>
+
+        <module>11-spring-schema</module>
     </modules>
 
     <build>
