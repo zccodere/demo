@@ -33,6 +33,7 @@
         <module>10-cloud</module>
 
         <module>11-spring-schema</module>
+        <module>12-nacos</module>
     </modules>
 
     <build>

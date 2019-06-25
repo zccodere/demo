@@ -47,3 +47,7 @@ Spring Cloud 简单 Demo
 ### 2018101601：11-spring-schema<br>
 
 基于 Spring Schema 提供自定义配置支持
+
+### 2019061801：12-nacos
+
+基于 Nacos 实现配置参数动态刷新及服务注册发现
