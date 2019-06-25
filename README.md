@@ -51,3 +51,7 @@ Spring Cloud 简单 Demo
 ### 2019061801：12-nacos
 
 基于 Nacos 实现配置参数动态刷新及服务注册发现
+
+### 2019062501：13-es
+
+使用`elasticsearch-rest-high-level-client`访问`ElasticSearch`

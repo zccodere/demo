@@ -34,6 +34,7 @@
 
         <module>11-spring-schema</module>
         <module>12-nacos</module>
+        <module>13-es</module>
     </modules>
 
     <build>
