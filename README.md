@@ -55,3 +55,7 @@ Spring Cloud 简单 Demo
 ### 2019062501：13-es
 
 使用`elasticsearch-rest-high-level-client`访问`ElasticSearch`
+
+### 2019112601：15-task
+
+使用单独线程一直不停的跑业务服务
