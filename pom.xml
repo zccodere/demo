@@ -38,6 +38,8 @@
         <module>13-es</module>
         <module>14-time</module>
         <module>15-task</module>
+
+        <module>16-script</module>
     </modules>
 
     <build>
