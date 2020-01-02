@@ -63,3 +63,7 @@ SpringBoot在Controller中使用Java8的LocalDate或LocalDateTime接收日期时
 ### 2019112601：15-task
 
 使用单独线程一直不停的跑业务服务
+
+### 2019120501：16-script
+
+基于Jfinal通过单元测试跑脚本任务
