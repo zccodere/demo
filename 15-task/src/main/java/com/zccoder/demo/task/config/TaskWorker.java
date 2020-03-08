@@ -1,4 +1,4 @@
-package com.zccoder.demo.task.configuration;
+package com.zccoder.demo.task.config;
 
 import com.zccoder.demo.task.service.RunTaskService;
 
@@ -28,7 +28,7 @@ public class TaskWorker implements CommandLineRunner, DisposableBean {
     @Autowired
     private RunTaskService runTaskService;
 
-    private boolean continueRun = true;
+    private volatile boolean continueRun = true;
 
     @Override
     public void run(String... args) {

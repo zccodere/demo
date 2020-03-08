@@ -1,4 +1,4 @@
-package com.zccoder.demo.task.configuration;
+package com.zccoder.demo.task.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
