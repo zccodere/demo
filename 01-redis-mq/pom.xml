@@ -12,10 +12,6 @@
 
     <artifactId>01-redis-mq</artifactId>
 
-    <properties>
-        <spring.boot.version>1.5.0.RELEASE</spring.boot.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -38,9 +34,9 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
         </dependency>
     </dependencies>
 

@@ -6,11 +6,9 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Component;
 
 /**
- * 标题：消息生产者<br>
- * 描述：消息生产者<br>
- * 时间：2018/06/22<br>
+ * 消息生产者
  *
- * @author zc
+ * @author zc 2018-06-22
  **/
 @Component
 public class MessageProducer {
@@ -21,6 +19,8 @@ public class MessageProducer {
     private ChannelTopic channelTopic;
 
     public void publish(String message) {
-        this.stringRedisTemplate.convertAndSend(this.channelTopic.getTopic(), "时间： " + System.currentTimeMillis() + "," + Thread.currentThread().getName() + "：消息：" + message);
+        String channel = this.channelTopic.getTopic();
+        String messageWarp = "时间： " + System.currentTimeMillis() + "," + Thread.currentThread().getName() + "：消息：" + message;
+        this.stringRedisTemplate.convertAndSend(channel, messageWarp);
     }
 }

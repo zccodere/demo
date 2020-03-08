@@ -1,30 +1,31 @@
-package com.zccoder.demo.redis.mq.jedis;
+package com.zccoder.demo.redis.mq.jedis.config;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Protocol;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 /**
- * 标题：创建连接<br>
- * 描述：创建连接<br>
- * 时间：2018/06/25<br>
+ * 创建 Redis 连接
  *
- * @author zc
+ * @author zc 2018-06-25
  **/
 public class JedisFactory {
 
-    private static JedisPool jedisPool;
+    private static volatile JedisPool jedisPool;
 
     public static Jedis getJedis() {
-        if (jedisPool != null) {
+        if (Objects.nonNull(jedisPool)) {
             return jedisPool.getResource();
         }
-        URI redisUri = null;
+        URI redisUri;
         try {
+            // @符号前面为连接密码，如果未设置密码，删除即可
             redisUri = new URI("redis://zhongguo@127.0.0.1:6379");
         } catch (URISyntaxException ex) {
             throw new RuntimeException(ex);

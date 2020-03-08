@@ -1,13 +1,16 @@
-package com.zccoder.demo.redis.mq.jedis;
+package com.zccoder.demo.redis.mq.jedis.producer;
+
+import com.zccoder.demo.redis.mq.jedis.TopicConstant;
+import com.zccoder.demo.redis.mq.jedis.config.JedisFactory;
+
+import java.util.concurrent.TimeUnit;
 
 import redis.clients.jedis.Jedis;
 
 /**
- * 标题：消息发送者<br>
- * 描述：消息发送者<br>
- * 时间：2018/06/25<br>
+ * 消息发送者
  *
- * @author zc
+ * @author zc 2018-06-25
  **/
 public class MessageProducerStart {
 
@@ -20,7 +23,8 @@ public class MessageProducerStart {
             String message = "我是消息" + i;
             jedis.publish(TopicConstant.TOPIC_TEST_ONE, message);
             System.out.println("发送消息：" + message);
-            Thread.sleep(1000L);
+            // 休眠1秒后再发送
+            TimeUnit.SECONDS.sleep(1);
         }
         System.out.println("结束发送消息");
     }

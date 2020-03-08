@@ -7,16 +7,14 @@ import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
 
 /**
- * 标题：消息消费者<br>
- * 描述：消息消费者<br>
- * 时间：2018/06/22<br>
+ * 消息消费者
  *
- * @author zc
+ * @author zc 2018-06-22
  **/
 @Component
 public class MessageConsumer implements MessageListener {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void onMessage(Message message, byte[] channel) {

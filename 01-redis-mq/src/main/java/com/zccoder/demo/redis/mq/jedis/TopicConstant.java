@@ -1,11 +1,9 @@
 package com.zccoder.demo.redis.mq.jedis;
 
 /**
- * 标题：Topic 常量<br>
- * 描述：Topic 常量<br>
- * 时间：2018/06/25<br>
+ * Topic 常量
  *
- * @author zc
+ * @author zc 2018-06-25
  **/
 public class TopicConstant {
 
