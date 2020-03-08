@@ -4,11 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 标题：演示服务<br>
- * 描述：演示服务<br>
- * 时间：2018/07/06<br>
+ * 演示服务
  *
- * @author zc
+ * @author zc 2018-07-06
  **/
 public class DemoService extends Thread {
 

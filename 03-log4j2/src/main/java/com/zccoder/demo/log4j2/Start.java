@@ -4,13 +4,12 @@ import com.zccoder.demo.log4j2.service.DemoService;
 import com.zccoder.demo.log4j2.service.UserService;
 
 /**
- * 标题：启动类<br>
- * 描述：启动类<br>
- * 时间：2018/07/06<br>
+ * 启动类
  *
- * @author zc
+ * @author zc 2018-07-06
  **/
 public class Start {
+
     public static void main(String[] args) {
         DemoService demoService = new DemoService();
         demoService.run();
