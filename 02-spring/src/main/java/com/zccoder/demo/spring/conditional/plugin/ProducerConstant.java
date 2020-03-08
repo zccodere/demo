@@ -1,37 +1,35 @@
 package com.zccoder.demo.spring.conditional.plugin;
 
-import com.zccoder.demo.spring.conditional.plugin.producer.AliyunmqProducer;
-import com.zccoder.demo.spring.conditional.plugin.producer.RedismqProducer;
-import com.zccoder.demo.spring.conditional.plugin.producer.RocketmqProducer;
+import com.zccoder.demo.spring.conditional.plugin.producer.AliyunMqProducer;
+import com.zccoder.demo.spring.conditional.plugin.producer.RedisMqProducer;
+import com.zccoder.demo.spring.conditional.plugin.producer.RocketMqProducer;
 
 /**
- * 标题：常量<br>
- * 描述：常量<br>
- * 时间：2018/06/28<br>
+ * 常量
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public class ProducerConstant {
 
-    public enum Supportmq{
+    public enum SupportMq {
         /**
          * AliyunMQ
          */
-        AliyunMQ("aliyunmqProducer",AliyunmqProducer.class),
+        AliyunMQ("aliyunMqProducer", AliyunMqProducer.class),
         /**
          * RocketMQ
          */
-        RocketMQ("rocketmqProducer",RocketmqProducer.class),
+        RocketMQ("rocketMqProducer", RocketMqProducer.class),
         /**
          * RedisMQ
          */
-        RedisMQ("redismqProducer",RedismqProducer.class);
+        RedisMQ("redisMqProducer", RedisMqProducer.class);
 
         private String beanName;
 
         private Class beanClass;
 
-        Supportmq(String beanName,Class beanClass){
+        SupportMq(String beanName, Class beanClass) {
             this.beanName = beanName;
             this.beanClass = beanClass;
         }

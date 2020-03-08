@@ -5,8 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-   <context:component-scan base-package="com.zccoder.demo.spring.conditional.busi"/>
+   <context:component-scan base-package="com.zccoder.demo.spring.conditional.service"/>
 
-   <bean class="com.zccoder.demo.spring.conditional.plugin.support.configuration.RedismqConfiguration"/>
+   <bean class="com.zccoder.demo.spring.conditional.plugin.support.configuration.RedisMqConfiguration"/>
 
 </beans>

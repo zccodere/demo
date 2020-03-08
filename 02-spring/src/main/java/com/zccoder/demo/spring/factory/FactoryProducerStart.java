@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 标题：FactoryBean 学习启动类<br> 描述：FactoryBean 学习启动类<br> 时间：2018/06/28<br>
+ * FactoryBean 学习启动类
  *
- * @author zc 2020-03-02
+ * @author zc 2018-06-28
  **/
-public class Start {
+public class FactoryProducerStart {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
@@ -29,6 +29,8 @@ public class Start {
         for (String key : keySet) {
             System.out.println("Bean ID[" + key + "]；Value[" + producerMap.get(key) + "]");
         }
+
+        System.out.println("----------------------------------------");
 
         ClientBean clientBean = applicationContext.getBean(ClientBean.class);
         clientBean.doTest();

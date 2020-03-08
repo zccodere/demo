@@ -1,13 +1,12 @@
 package com.zccoder.demo.spring.conditional.plugin;
 
 /**
- * 标题：生产者接口<br>
- * 描述：生产者接口<br>
- * 时间：2018/06/28<br>
+ * 消息生产者接口
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public interface Producer {
+
     /**
      * Hello
      *

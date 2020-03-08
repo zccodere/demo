@@ -1,16 +1,15 @@
 package com.zccoder.demo.spring.factory.service;
 
 import com.zccoder.demo.spring.factory.proxy.ProxyProducer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * 标题：用户服务<br>
- * 描述：用户服务<br>
- * 时间：2018/06/28<br>
+ * 用户服务
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 @Service
 public class UserService {
@@ -27,18 +26,18 @@ public class UserService {
     @Qualifier("userQueryProducer")
     private ProxyProducer userQueryProducer;
 
-    public void create(String name){
-        System.out.println("创建用户："+name);
+    public void create(String name) {
+        System.out.println("创建用户：" + name);
         userCreateProducer.send(name);
     }
 
-    public void delete(String name){
-        System.out.println("删除用户："+name);
+    public void delete(String name) {
+        System.out.println("删除用户：" + name);
         userDeleteProducer.send(name);
     }
 
-    public void query(String name){
-        System.out.println("查询用户："+name);
+    public void query(String name) {
+        System.out.println("查询用户：" + name);
         userQueryProducer.send(name);
     }
 

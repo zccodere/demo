@@ -1,17 +1,16 @@
-package com.zccoder.demo.spring.conditional.busi;
+package com.zccoder.demo.spring.conditional.service;
 
 import com.zccoder.demo.spring.conditional.plugin.Producer;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Map;
 
 /**
- * 标题：@Enable 学习启动类<br>
- * 描述：@Enable 学习启动类<br>
- * 时间：2018/06/28<br>
+ * 注解 @Enable 学习启动类
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public class Start {
 
@@ -25,7 +24,8 @@ public class Start {
         Map<String, Producer> producerMap = applicationContext.getBeansOfType(Producer.class);
         for (Map.Entry<String, Producer> entry : producerMap.entrySet()) {
             System.out.println(entry.getKey());
-            entry.getValue().hello("xml message");
+            String message = entry.getValue().hello("xml message");
+            System.out.println(message);
         }
     }
 
@@ -34,7 +34,8 @@ public class Start {
         Map<String, Producer> producerMap = applicationContext.getBeansOfType(Producer.class);
         for (Map.Entry<String, Producer> entry : producerMap.entrySet()) {
             System.out.println(entry.getKey());
-            entry.getValue().hello("java message");
+            String message = entry.getValue().hello("java message");
+            System.out.println(message);
         }
     }
 }

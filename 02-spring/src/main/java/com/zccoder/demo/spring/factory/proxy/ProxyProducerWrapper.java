@@ -1,11 +1,9 @@
 package com.zccoder.demo.spring.factory.proxy;
 
 /**
- * 标题：代理生产者包装<br>
- * 描述：代理生产者包装<br>
- * 时间：2018/06/28<br>
+ * 代理生产者包装
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public class ProxyProducerWrapper implements ProxyProducer {
 

@@ -1,4 +1,6 @@
-package com.zccoder.demo.spring.enable.plugin.support;
+package com.zccoder.demo.spring.conditional.plugin.support.annotation;
+
+import com.zccoder.demo.spring.conditional.plugin.support.configuration.RedisMqConfiguration;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,14 +11,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 启动插件注解
+ * 开启RedisMQ；当使用此注解时，会自动注册RedisMQ生产者
  *
  * @author zc 2018-06-28
  **/
-@Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(PluginDemoConfiguration.class)
-public @interface EnablePluginDemo {
+@Import(RedisMqConfiguration.class)
+@Documented
+public @interface EnableRedisMq {
+
 
 }

@@ -3,16 +3,15 @@ package com.zccoder.demo.spring.conditional.plugin.producer;
 import com.zccoder.demo.spring.conditional.plugin.Producer;
 
 /**
- * 标题：AliyunMq生产者<br>
- * 描述：AliyunMq生产者<br>
- * 时间：2018/06/28<br>
+ * RocketMq生产者
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
-public class AliyunmqProducer implements Producer {
+public class RocketMqProducer implements Producer {
+
     @Override
     public String hello(String name) {
-        String result = "Aliyunmq say hello to :" + name;
+        String result = "RocketMq say hello to :" + name;
         System.out.println(result);
         return result;
     }

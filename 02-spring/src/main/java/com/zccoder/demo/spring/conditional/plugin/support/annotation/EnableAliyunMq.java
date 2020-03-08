@@ -1,4 +1,6 @@
-package com.zccoder.demo.spring.enable.plugin.support;
+package com.zccoder.demo.spring.conditional.plugin.support.annotation;
+
+import com.zccoder.demo.spring.conditional.plugin.support.configuration.AliyunMqConfiguration;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,14 +11,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 启动插件注解
+ * 开启AliyunMQ；当使用此注解时，会自动注册AliyunMQ生产者
  *
  * @author zc 2018-06-28
  **/
-@Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(PluginDemoConfiguration.class)
-public @interface EnablePluginDemo {
+@Import(AliyunMqConfiguration.class)
+@Documented
+public @interface EnableAliyunMq {
 
 }

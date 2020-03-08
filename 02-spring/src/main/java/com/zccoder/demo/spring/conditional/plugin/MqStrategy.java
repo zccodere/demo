@@ -1,13 +1,12 @@
 package com.zccoder.demo.spring.conditional.plugin;
 
 /**
- * 标题：消息策略<br>
- * 描述：消息策略<br>
- * 时间：2018/06/28<br>
+ * 消息策略枚举
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public enum MqStrategy {
+
     /**
      * RocketMQ
      */
@@ -21,15 +20,15 @@ public enum MqStrategy {
      */
     RedisMQ;
 
-    public static boolean isRocketMQ(String strategy) {
+    public static boolean isRocketMq(String strategy) {
         return RocketMQ.name().equals(strategy);
     }
 
-    public static boolean isAliyunMQ(String strategy) {
+    public static boolean isAliyunMq(String strategy) {
         return AliyunMQ.name().equals(strategy);
     }
 
-    public static boolean isRedisMQ(String strategy) {
+    public static boolean isRedisMq(String strategy) {
         return RedisMQ.name().equals(strategy);
     }
 }

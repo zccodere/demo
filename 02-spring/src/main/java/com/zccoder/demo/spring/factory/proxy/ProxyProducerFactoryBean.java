@@ -1,35 +1,31 @@
 package com.zccoder.demo.spring.factory.proxy;
 
 import com.zccoder.demo.spring.factory.producer.DefaultProxyProducer;
+
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
 
 import java.lang.reflect.Proxy;
 
 /**
- * 标题：生产者工厂Bean<br>
- * 描述：生产者工厂Bean<br>
- * 时间：2018/06/28<br>
+ * 生产者工厂Bean
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 public class ProxyProducerFactoryBean implements FactoryBean<ProxyProducer>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
-    private ProxyProducerConfig config;
     private ProxyProducerWrapper wrapper;
     private ProxyProducer proxyProducer;
     private ProxyProducerStrategy localStrategy;
 
     @Override
-    public ProxyProducer getObject() throws Exception {
-        config = applicationContext.getBean(ProxyProducerConfig.class);
-        if (config == null) {
-            throw new BeanCreationException("缺少配置类：ProxyProducerConfig");
-        }
+    public ProxyProducer getObject() {
+        ProxyProducerConfig config = applicationContext.getBean(ProxyProducerConfig.class);
+
         if (config.getEnable() == null) {
             config.setEnable(false);
         }
@@ -62,7 +58,7 @@ public class ProxyProducerFactoryBean implements FactoryBean<ProxyProducer>, App
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 

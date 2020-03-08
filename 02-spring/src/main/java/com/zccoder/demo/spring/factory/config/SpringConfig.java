@@ -5,16 +5,15 @@ import com.zccoder.demo.spring.factory.producer.RedisMqProducer;
 import com.zccoder.demo.spring.factory.producer.RocketMqProducer;
 import com.zccoder.demo.spring.factory.proxy.ProxyProducerConfig;
 import com.zccoder.demo.spring.factory.proxy.ProxyProducerFactoryBean;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 标题：配置<br>
- * 描述：配置<br>
- * 时间：2018/06/28<br>
+ * 配置
  *
- * @author zc
+ * @author zc 2018-06-28
  **/
 @ComponentScan("com.zccoder.demo.spring.factory")
 @Configuration
