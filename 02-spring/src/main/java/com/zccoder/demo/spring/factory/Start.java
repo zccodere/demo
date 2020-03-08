@@ -1,19 +1,19 @@
 package com.zccoder.demo.spring.factory;
 
 import com.zccoder.demo.spring.factory.config.SpringConfig;
+import com.zccoder.demo.spring.factory.platform.ClientBean;
 import com.zccoder.demo.spring.factory.proxy.ProxyProducer;
 import com.zccoder.demo.spring.factory.service.UserService;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * 标题：FactoryBean 学习启动类<br>
- * 描述：FactoryBean 学习启动类<br>
- * 时间：2018/06/28<br>
+ * 标题：FactoryBean 学习启动类<br> 描述：FactoryBean 学习启动类<br> 时间：2018/06/28<br>
  *
- * @author zc
+ * @author zc 2020-03-02
  **/
 public class Start {
 
@@ -29,5 +29,9 @@ public class Start {
         for (String key : keySet) {
             System.out.println("Bean ID[" + key + "]；Value[" + producerMap.get(key) + "]");
         }
+
+        ClientBean clientBean = applicationContext.getBean(ClientBean.class);
+        clientBean.doTest();
+
     }
 }
