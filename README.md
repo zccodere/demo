@@ -67,3 +67,7 @@ SpringBoot在Controller中使用Java8的LocalDate或LocalDateTime接收日期时
 ### 2019120501：16-script
 
 基于Jfinal通过单元测试跑脚本任务
+
+### 2020021801：17-image
+
+使用 BufferedImage 合并图片

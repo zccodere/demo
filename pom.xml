@@ -40,6 +40,7 @@
         <module>15-task</module>
 
         <module>16-script</module>
+        <module>17-image</module>
     </modules>
 
     <build>
