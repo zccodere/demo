@@ -5,11 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * 标题：订单服务<br>
- * 描述：订单服务<br>
- * 时间：2018/10/12<br>
+ * 订单服务启动类
  *
- * @author zc
+ * @author zc 2018-10-12
  **/
 @EnableDiscoveryClient
 @SpringBootApplication

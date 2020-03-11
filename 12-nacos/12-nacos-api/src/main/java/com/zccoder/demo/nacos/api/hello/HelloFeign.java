@@ -1,6 +1,6 @@
 package com.zccoder.demo.nacos.api.hello;
 
-import com.zccoder.demo.nacos.api.Const;
+import com.zccoder.demo.nacos.api.HelloApiConst;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author zc 2019-06-18
  */
-@FeignClient(name = Const.SERVICE_NAME, url = Const.SERVICE_URL, path = "/hello", fallbackFactory = HelloFeignFallbackFactory.class)
+@FeignClient(name = HelloApiConst.SERVICE_NAME, url = HelloApiConst.SERVICE_URL, path = "/hello", fallbackFactory = HelloFeignFallbackFactory.class)
 public interface HelloFeign {
 
     /**

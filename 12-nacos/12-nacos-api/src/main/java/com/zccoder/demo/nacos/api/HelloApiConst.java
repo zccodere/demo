@@ -5,7 +5,7 @@ package com.zccoder.demo.nacos.api;
  *
  * @author zc 2019-06-19
  */
-public class Const {
+public class HelloApiConst {
 
     /**
      * 服务名称

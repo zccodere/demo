@@ -3,6 +3,7 @@ package com.zccoder.demo.cloud.service.order.web;
 import com.zccoder.demo.cloud.service.order.OrderService;
 import com.zccoder.demo.cloud.service.order.bo.OrderCreateReqBO;
 import com.zccoder.demo.cloud.service.order.bo.OrderInfo;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -11,11 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 标题：订单服务实现<br>
- * 描述：订单服务实现<br>
- * 时间：2018/10/12<br>
+ * 订单服务实现
  *
- * @author zc
+ * @author zc 2018-10-12
  **/
 @RestController
 public class OrderServiceImpl implements OrderService {

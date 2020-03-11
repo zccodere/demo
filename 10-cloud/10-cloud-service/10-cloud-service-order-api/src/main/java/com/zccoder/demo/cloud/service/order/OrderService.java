@@ -2,6 +2,7 @@ package com.zccoder.demo.cloud.service.order;
 
 import com.zccoder.demo.cloud.service.order.bo.OrderCreateReqBO;
 import com.zccoder.demo.cloud.service.order.bo.OrderInfo;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * 标题：订单服务<br>
- * 描述：订单服务<br>
- * 时间：2018/10/12<br>
+ * 订单服务
  *
- * @author zc
+ * @author zc 2018-10-12
  **/
 @RequestMapping("/order")
 public interface OrderService {

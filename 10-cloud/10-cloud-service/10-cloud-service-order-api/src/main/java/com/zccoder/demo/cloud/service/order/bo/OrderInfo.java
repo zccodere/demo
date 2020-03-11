@@ -3,11 +3,9 @@ package com.zccoder.demo.cloud.service.order.bo;
 import java.io.Serializable;
 
 /**
- * 标题：订单信息<br>
- * 描述：订单信息<br>
- * 时间：2018/10/12<br>
+ * 订单信息
  *
- * @author zc
+ * @author zc 2018-10-12
  **/
 public class OrderInfo implements Serializable {
 

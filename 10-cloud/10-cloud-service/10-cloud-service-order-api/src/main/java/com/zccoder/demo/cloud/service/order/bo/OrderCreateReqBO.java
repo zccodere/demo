@@ -3,11 +3,9 @@ package com.zccoder.demo.cloud.service.order.bo;
 import java.io.Serializable;
 
 /**
- * 标题：创建订单入参BO<br>
- * 描述：创建订单入参BO<br>
- * 时间：2018/10/12<br>
+ * 创建订单入参BO
  *
- * @author zc
+ * @author zc 2018-10-12
  **/
 public class OrderCreateReqBO implements Serializable {
 
@@ -24,7 +22,7 @@ public class OrderCreateReqBO implements Serializable {
      * 商品名称
      */
     private String goodsName;
-    
+
     @Override
     public String toString() {
         return "OrderCreateReqBO{" +

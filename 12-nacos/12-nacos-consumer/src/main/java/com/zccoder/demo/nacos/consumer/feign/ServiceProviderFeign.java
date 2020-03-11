@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author zc 2019-06-18
  */
-@FeignClient(name = "nacos-provider", url = "${nacos.provider.url:}", path = "/hello", fallbackFactory = ServiceProviderFeignFallbackFactory.class)
+@FeignClient(name = "nacos-provider-local", url = "${nacos.provider.url:}", path = "/hello", fallbackFactory = ServiceProviderFeignFallbackFactory.class)
 public interface ServiceProviderFeign {
 
     /**

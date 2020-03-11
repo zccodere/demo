@@ -6,11 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
- * 标题：配置中心<br>
- * 描述：启动类<br>
- * 时间：2018/10/11<br>
+ * 配置中心启动类
  *
- * @author zc
+ * @author zc 2018-10-11
  **/
 @EnableConfigServer
 @EnableDiscoveryClient
