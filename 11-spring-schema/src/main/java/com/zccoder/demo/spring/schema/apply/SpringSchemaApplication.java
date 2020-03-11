@@ -2,6 +2,7 @@ package com.zccoder.demo.spring.schema.apply;
 
 import com.zccoder.demo.spring.schema.apply.service.impl.HelloServiceImpl;
 import com.zccoder.demo.spring.schema.support.ServiceConfig;
+
 import org.springframework.beans.BeansException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
@@ -19,21 +21,18 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * 标题：启动类<br>
- * 描述：启动类<br>
- * 时间：2018/10/16<br>
+ * 启动类
  *
- * @author zc
+ * @author zc 2018-10-16
  **/
 @ImportResource("classpath:apply-service.xml")
 @SpringBootApplication
-public class ApplyApplication implements ApplicationContextAware, CommandLineRunner {
+public class SpringSchemaApplication implements ApplicationContextAware, CommandLineRunner {
 
     private ApplicationContext applicationContext;
 
     public static void main(String[] args) {
-
-        SpringApplication.run(ApplyApplication.class, args);
+        SpringApplication.run(SpringSchemaApplication.class, args);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ApplyApplication implements ApplicationContextAware, CommandLineRun
      */
     private void registerMapping() throws Exception {
         // 获取注册服务
-        RequestMappingHandlerMapping handlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping handlerMapping = this.applicationContext.getBean(RequestMappingHandlerMapping.class);
 
         // 构建URL路径
         PatternsRequestCondition patternsRequestCondition = new PatternsRequestCondition("/helloService/hello");
@@ -68,7 +67,7 @@ public class ApplyApplication implements ApplicationContextAware, CommandLineRun
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 }

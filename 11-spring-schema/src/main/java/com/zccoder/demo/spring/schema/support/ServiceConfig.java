@@ -1,11 +1,9 @@
 package com.zccoder.demo.spring.schema.support;
 
 /**
- * 标题：服务配置<br>
- * 描述：定义服务配置项<br>
- * 时间：2018/10/16<br>
+ * 定义服务配置项
  *
- * @author zc
+ * @author zc 2018-10-16
  **/
 public class ServiceConfig {
 

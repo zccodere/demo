@@ -6,11 +6,9 @@ import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 /**
- * 标题：自定义 BeanDefinitionParser<br>
- * 描述：自定义 BeanDefinitionParser<br>
- * 时间：2018/10/16<br>
+ * 自定义 BeanDefinitionParser
  *
- * @author zc
+ * @author zc 2018-10-16
  **/
 public class ServiceBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
 
@@ -18,8 +16,6 @@ public class ServiceBeanDefinitionParser extends AbstractSimpleBeanDefinitionPar
     protected Class<?> getBeanClass(Element element) {
         return ServiceConfig.class;
     }
-
-
 
     @Override
     protected void doParse(Element element, BeanDefinitionBuilder builder) {
