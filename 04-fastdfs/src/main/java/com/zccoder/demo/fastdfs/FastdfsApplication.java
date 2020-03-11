@@ -3,21 +3,20 @@ package com.zccoder.demo.fastdfs;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
 /**
- * 标题：启动类<br>
- * 描述：启动类<br>
- * 时间：2018/07/06<br>
+ * 启动类
  *
- * @author zc
+ * @author zc 2018-07-06
  **/
 @SpringBootApplication
-public class FastdfsStart {
+public class FastdfsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FastdfsStart.class, args);
+        SpringApplication.run(FastdfsApplication.class, args);
     }
 
     /**
@@ -26,8 +25,8 @@ public class FastdfsStart {
      * @return 自定义tomcat容器
      */
     @Bean
-    public TomcatEmbeddedServletContainerFactory containerFactory() {
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+    public ConfigurableServletWebServerFactory configurableServletWebServerFactory() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         tomcat.addConnectorCustomizers(connector -> {
             if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>) {
                 ((AbstractHttp11Protocol) connector.getProtocolHandler()).setMaxSwallowSize(-1);

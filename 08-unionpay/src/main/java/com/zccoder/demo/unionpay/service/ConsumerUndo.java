@@ -4,36 +4,28 @@ import com.zccoder.demo.unionpay.constant.UnionpayConstants;
 import com.zccoder.demo.unionpay.sdk.AcpService;
 import com.zccoder.demo.unionpay.sdk.LogUtil;
 import com.zccoder.demo.unionpay.sdk.SdkConfig;
-import com.zccoder.demo.unionpay.service.bo.ConsumerUndoReqBO;
+import com.zccoder.demo.unionpay.service.bo.ConsumerUndoReqBo;
 import com.zccoder.demo.unionpay.util.HtmlUtils;
+
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 标题：消费撤销服务（退款订单）<br>
- * 描述：消费撤销服务（退款订单）<br>
- * 时间：2018/09/26<br>
+ * 消费撤销服务（退款订单）
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 @Service
 public class ConsumerUndo {
 
-    public String execute(ConsumerUndoReqBO reqBO) {
+    public String execute(ConsumerUndoReqBo reqBO) {
 
         SdkConfig.getConfig().loadPropertiesFromSrc();
 
         Map<String, String> data = new HashMap<>(64);
 
-        // 银联全渠道系统，产品参数，除了encoding自行选择外其他不需修改
-        // 版本号
-        data.put("version", SdkConfig.getConfig().getVersion());
-        //字符集编码 可以使用UTF-8,GBK两种方式
-        data.put("encoding", UnionpayConstants.ENCODING);
-        //签名方法
-        data.put("signMethod", SdkConfig.getConfig().getSignMethod());
         //交易类型 31-消费撤销
         data.put("txnType", "31");
         //交易子类型  默认00
@@ -42,6 +34,14 @@ public class ConsumerUndo {
         data.put("bizType", "000201");
         //渠道类型，07-PC，08-手机
         data.put("channelType", "07");
+
+        // 银联全渠道系统，产品参数，除了encoding自行选择外其他不需修改
+        // 版本号
+        data.put("version", SdkConfig.getConfig().getVersion());
+        //字符集编码 可以使用UTF-8,GBK两种方式
+        data.put("encoding", UnionpayConstants.ENCODING);
+        //签名方法
+        data.put("signMethod", SdkConfig.getConfig().getSignMethod());
 
         // 商户接入参数
         //商户号码，请改成自己申请的商户号或者open上注册得来的777商户号测试

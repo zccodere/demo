@@ -3,13 +3,11 @@ package com.zccoder.demo.unionpay.service.bo;
 import java.io.Serializable;
 
 /**
- * 标题：消费撤销服务（退款订单）入参BO<br>
- * 描述：消费撤销服务（退款订单）入参BO<br>
- * 时间：2018/09/26<br>
+ * 消费撤销服务（退款订单）入参BO
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
-public class ConsumerUndoReqBO implements Serializable {
+public class ConsumerUndoReqBo implements Serializable {
 
     private static final long serialVersionUID = 7769621937561024134L;
     /**

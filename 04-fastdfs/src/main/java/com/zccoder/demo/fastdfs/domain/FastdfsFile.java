@@ -3,13 +3,12 @@ package com.zccoder.demo.fastdfs.domain;
 import java.util.Arrays;
 
 /**
- * 标题：FastDEF文件<br>
- * 描述：FastDEF文件<br>
- * 时间：2018/07/06<br>
+ * FastDEF文件
  *
- * @author zc
+ * @author zc 2018-07-06
  **/
 public class FastdfsFile {
+
     /**
      * 文件名称
      */

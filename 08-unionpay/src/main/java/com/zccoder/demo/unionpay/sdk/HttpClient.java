@@ -1,19 +1,28 @@
 package com.zccoder.demo.unionpay.sdk;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
-import java.net.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
- * 标题：HttpClient<br>
- * 描述：acp sdk 发送后台http请求类<br>
- * 时间：2018/09/27<br>
+ * acp sdk 发送后台http请求类
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
-public class HttpClient {
+class HttpClient {
+
     /**
      * 目标地址
      */
@@ -36,19 +45,15 @@ public class HttpClient {
 
     /**
      * 获取通信结果
-     *
-     * @return
      */
-    public String getResult() {
+    String getResult() {
         return result;
     }
 
     /**
      * 设置通信结果
-     *
-     * @param result
      */
-    public void setResult(String result) {
+    private void setResult(String result) {
         this.result = result;
     }
 
@@ -59,7 +64,7 @@ public class HttpClient {
      * @param connectionTimeout HTTP连接超时时间
      * @param readTimeOut       HTTP读写超时时间
      */
-    public HttpClient(String url, int connectionTimeout, int readTimeOut) {
+    HttpClient(String url, int connectionTimeout, int readTimeOut) {
         try {
             this.url = new URL(url);
             this.connectionTimeout = connectionTimeout;
@@ -71,69 +76,56 @@ public class HttpClient {
 
     /**
      * 发送信息到服务端
-     *
-     * @param data
-     * @param encoding
-     * @return
-     * @throws Exception
      */
-    public int send(Map<String, String> data, String encoding) throws Exception {
+    int sendPost(Map<String, String> data, String encoding) {
         try {
-            HttpURLConnection httpURLConnection = createConnection(encoding);
-            if (null == httpURLConnection) {
+            HttpURLConnection httpUrlConnection = this.createConnection("POST", encoding);
+            if (null == httpUrlConnection) {
                 throw new Exception("Create httpURLConnection Failure");
             }
             String sendData = this.getRequestParamString(data, encoding);
             LogUtil.writeLog("请求报文(对每个报文域的值均已做url编码):[" + sendData + "]");
-            this.requestServer(httpURLConnection, sendData,
+            this.requestServer(httpUrlConnection, sendData,
                     encoding);
-            this.result = this.response(httpURLConnection, encoding);
+            this.setResult(this.response(httpUrlConnection, encoding));
             LogUtil.writeLog("Response message:[" + result + "]");
-            return httpURLConnection.getResponseCode();
-        } catch (Exception e) {
-            throw e;
+            return httpUrlConnection.getResponseCode();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
     /**
      * 发送信息到服务端 GET方式
      *
-     * @param encoding
      * @return HTTP 响应码
-     * @throws Exception
      */
-    public int sendGet(String encoding) throws Exception {
+    int sendGet(String encoding) {
         try {
-            HttpURLConnection httpURLConnection = createConnectionGet(encoding);
-            if (null == httpURLConnection) {
+            HttpURLConnection httpUrlConnection = this.createConnection("GET", encoding);
+            if (null == httpUrlConnection) {
                 throw new Exception("创建联接失败");
             }
-            this.result = this.response(httpURLConnection, encoding);
+            this.setResult(this.response(httpUrlConnection, encoding));
             LogUtil.writeLog("同步返回报文:[" + result + "]");
-            return httpURLConnection.getResponseCode();
-        } catch (Exception e) {
-            throw e;
+            return httpUrlConnection.getResponseCode();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
-
     /**
      * HTTP Post发送消息
-     *
-     * @param connection
-     * @param message
-     * @throws IOException
      */
-    private void requestServer(final URLConnection connection, String message, String encoder)
-            throws Exception {
+    private void requestServer(final URLConnection connection, String message, String encoder) {
         PrintStream out = null;
         try {
             connection.connect();
             out = new PrintStream(connection.getOutputStream(), false, encoder);
             out.print(message);
             out.flush();
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         } finally {
             if (null != out) {
                 out.close();
@@ -143,18 +135,10 @@ public class HttpClient {
 
     /**
      * 显示Response消息
-     *
-     * @param connection
-     * @param CharsetName
-     * @return
-     * @throws URISyntaxException
-     * @throws IOException
      */
-    private String response(final HttpURLConnection connection, String encoding)
-            throws URISyntaxException, IOException, Exception {
+    private String response(final HttpURLConnection connection, String encoding) throws Exception {
         InputStream in = null;
         StringBuilder sb = new StringBuilder(1024);
-        BufferedReader br = null;
         try {
             int success = 200;
             if (success == connection.getResponseCode()) {
@@ -167,12 +151,9 @@ public class HttpClient {
             LogUtil.writeLog("HTTP Return Status-Code:["
                     + connection.getResponseCode() + "]");
             return sb.toString();
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         } finally {
-            if (null != br) {
-                br.close();
-            }
             if (null != in) {
                 in.close();
             }
@@ -182,9 +163,9 @@ public class HttpClient {
         }
     }
 
-    public static byte[] read(InputStream in) throws IOException {
+    private static byte[] read(InputStream in) throws IOException {
         byte[] buf = new byte[1024];
-        int length = 0;
+        int length;
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         while ((length = in.read(buf, 0, buf.length)) > 0) {
             bout.write(buf, 0, length);
@@ -195,102 +176,58 @@ public class HttpClient {
 
     /**
      * 创建连接
-     *
-     * @return
-     * @throws ProtocolException
      */
-    private HttpURLConnection createConnection(String encoding) throws ProtocolException {
-        HttpURLConnection httpURLConnection = null;
+    private HttpURLConnection createConnection(String requestMethod, String encoding) throws ProtocolException {
+        HttpURLConnection httpUrlConnection;
         try {
-            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpUrlConnection = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             LogUtil.writeErrorLog(e.getMessage(), e);
             return null;
         }
         // 连接超时时间
-        httpURLConnection.setConnectTimeout(this.connectionTimeout);
+        httpUrlConnection.setConnectTimeout(this.connectionTimeout);
         // 读取结果超时时间
-        httpURLConnection.setReadTimeout(this.readTimeOut);
+        httpUrlConnection.setReadTimeout(this.readTimeOut);
         // 可读
-        httpURLConnection.setDoInput(true);
+        httpUrlConnection.setDoInput(true);
         // 可写
-        httpURLConnection.setDoOutput(true);
+        httpUrlConnection.setDoOutput(true);
         // 取消缓存
-        httpURLConnection.setUseCaches(false);
-        httpURLConnection.setRequestProperty("Content-type",
+        httpUrlConnection.setUseCaches(false);
+        httpUrlConnection.setRequestProperty("Content-type",
                 "application/x-www-form-urlencoded;charset=" + encoding);
-        httpURLConnection.setRequestMethod("POST");
+        httpUrlConnection.setRequestMethod(requestMethod);
         String https = "https";
         if (https.equalsIgnoreCase(url.getProtocol())) {
-            HttpsURLConnection husn = (HttpsURLConnection) httpURLConnection;
-            //是否验证https证书，测试环境请设置false，生产环境建议优先尝试true，不行再false
-            if (!SdkConfig.getConfig().isIfValidateRemoteCert()) {
-                husn.setSSLSocketFactory(new BaseHttpSslSocketFactory());
-                //解决由于服务器证书问题导致HTTPS无法访问的情况
-                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());
-            }
-            return husn;
-        }
-        return httpURLConnection;
-    }
-
-    /**
-     * 创建连接
-     *
-     * @return
-     * @throws ProtocolException
-     */
-    private HttpURLConnection createConnectionGet(String encoding) throws ProtocolException {
-        HttpURLConnection httpURLConnection = null;
-        try {
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            LogUtil.writeErrorLog(e.getMessage(), e);
-            return null;
-        }
-        // 连接超时时间
-        httpURLConnection.setConnectTimeout(this.connectionTimeout);
-        // 读取结果超时时间
-        httpURLConnection.setReadTimeout(this.readTimeOut);
-        // 取消缓存
-        httpURLConnection.setUseCaches(false);
-        httpURLConnection.setRequestProperty("Content-type",
-                "application/x-www-form-urlencoded;charset=" + encoding);
-        httpURLConnection.setRequestMethod("GET");
-        String https = "https";
-        if (https.equalsIgnoreCase(url.getProtocol())) {
-            HttpsURLConnection husn = (HttpsURLConnection) httpURLConnection;
+            HttpsURLConnection connection = (HttpsURLConnection) httpUrlConnection;
             //是否验证https证书，测试环境请设置false，生产环境建议优先尝试true，不行再false
             if (!SdkConfig.getConfig().isIfValidateRemoteCert()) {
                 //解决由于服务器证书问题导致HTTPS无法访问的情况
-                husn.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());
-                husn.setSSLSocketFactory(new BaseHttpSslSocketFactory());
+                connection.setHostnameVerifier(new BaseHttpSslSocketFactory.TrustAnyHostnameVerifier());
+                connection.setSSLSocketFactory(new BaseHttpSslSocketFactory());
             }
-            return husn;
+            return connection;
         }
-        return httpURLConnection;
+        return httpUrlConnection;
     }
 
     /**
      * 将Map存储的对象，转换为key=value&key=value的字符
-     *
-     * @param requestParam
-     * @param coder
-     * @return
      */
     private String getRequestParamString(Map<String, String> requestParam, String coder) {
         if (null == coder || "".equals(coder)) {
             coder = "UTF-8";
         }
-        StringBuffer sf = new StringBuffer("");
+        StringBuilder sf = new StringBuilder(64);
         String reqstr = "";
         if (null != requestParam && 0 != requestParam.size()) {
             for (Entry<String, String> en : requestParam.entrySet()) {
                 try {
-                    sf.append(en.getKey()
-                            + "="
-                            + (null == en.getValue() || "".equals(en.getValue()) ? "" : URLEncoder
-                            .encode(en.getValue(), coder)) + "&");
+                    sf.append(en.getKey())
+                            .append("=")
+                            .append(null == en.getValue() || "".equals(en.getValue()) ? "" : URLEncoder.encode(en.getValue(), coder))
+                            .append("&");
                 } catch (UnsupportedEncodingException e) {
                     LogUtil.writeErrorLog(e.getMessage(), e);
                     return "";
@@ -301,5 +238,4 @@ public class HttpClient {
         LogUtil.writeLog("Request Message:[" + reqstr + "]");
         return reqstr;
     }
-
 }

@@ -3,11 +3,9 @@ package com.zccoder.demo.unionpay.constant;
 import com.zccoder.demo.unionpay.sdk.SdkConfig;
 
 /**
- * 标题：常量<br>
- * 描述：常量<br>
- * 时间：2018/09/26<br>
+ * 常量
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 public class UnionpayConstants {
 

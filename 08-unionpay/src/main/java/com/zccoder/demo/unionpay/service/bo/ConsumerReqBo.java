@@ -3,13 +3,11 @@ package com.zccoder.demo.unionpay.service.bo;
 import java.io.Serializable;
 
 /**
- * 标题：消费服务（支付订单）入参BO<br>
- * 描述：消费服务（支付订单）入参BO<br>
- * 时间：2018/09/26<br>
+ * 消费服务（支付订单）入参BO
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
-public class ConsumerReqBO implements Serializable {
+public class ConsumerReqBo implements Serializable {
 
     private static final long serialVersionUID = -8325053080392591491L;
 

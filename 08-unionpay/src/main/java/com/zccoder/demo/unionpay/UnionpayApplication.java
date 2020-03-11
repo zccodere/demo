@@ -4,11 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 标题：银联网关支付启动类<br>
- * 描述：银联网关支付启动类<br>
- * 时间：2018/09/26<br>
+ * 银联网关支付启动类
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 @SpringBootApplication
 public class UnionpayApplication {

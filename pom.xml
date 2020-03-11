@@ -48,6 +48,11 @@
         <spring.boot.version>2.1.13.RELEASE</spring.boot.version>
         <slf4j.version>1.7.30</slf4j.version>
         <log4j2.version>2.11.2</log4j2.version>
+
+        <commons.io.version>2.6</commons.io.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
+
+        <fastjson.version>1.2.66</fastjson.version>
     </properties>
 
     <build>

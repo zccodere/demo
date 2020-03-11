@@ -1,18 +1,19 @@
 package com.zccoder.demo.unionpay.sdk;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * 标题：SDK配置<br>
- * 描述：acp sdk 配置文件acp_sdk.properties配置信息类<br>
- * 时间：2018/09/27<br>
+ * acp sdk 配置文件acp_sdk.properties配置信息类
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
 public class SdkConfig {
 
-    public static final String FILE_NAME = "acp_sdk.properties";
+    static final String FILE_NAME = "acp_sdk.properties";
 
     /**
      * 前台请求URL.
@@ -101,7 +102,7 @@ public class SdkConfig {
     /**
      * 是否验证验签证书CN，除了false都验
      */
-    private boolean ifValidateCNName = true;
+    private boolean ifValidateCnName = true;
     /**
      * 是否验证https证书，默认都不验
      */
@@ -338,8 +339,6 @@ public class SdkConfig {
 
     /**
      * 获取config对象.
-     *
-     * @return
      */
     public static SdkConfig getConfig() {
         return config;
@@ -361,8 +360,6 @@ public class SdkConfig {
                     properties = new Properties();
                     properties.load(in);
                     loadProperties(properties);
-                } catch (FileNotFoundException e) {
-                    LogUtil.writeErrorLog(e.getMessage(), e);
                 } catch (IOException e) {
                     LogUtil.writeErrorLog(e.getMessage(), e);
                 } finally {
@@ -396,16 +393,14 @@ public class SdkConfig {
                 properties = new Properties();
                 try {
                     properties.load(in);
-                } catch (IOException e) {
-                    throw e;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             } else {
                 LogUtil.writeErrorLog(FILE_NAME + "属性文件未能在classpath指定的目录下 " + SdkConfig.class.getClassLoader().getResource("").getPath() + " 找到!");
                 return;
             }
             loadProperties(properties);
-        } catch (IOException e) {
-            LogUtil.writeErrorLog(e.getMessage(), e);
         } finally {
             if (null != in) {
                 try {
@@ -419,12 +414,22 @@ public class SdkConfig {
 
     /**
      * 根据传入的 Properties 对象设置配置参数
-     *
-     * @param pro
      */
-    public void loadProperties(Properties pro) {
+    private void loadProperties(Properties pro) {
         LogUtil.writeLog("开始从属性文件中加载配置项");
-        String value = null;
+
+        // 基础部分
+        this.loadBase(pro);
+
+        // 缴费部分
+        this.loadFee(pro);
+
+        // 综合认证
+        this.loadAuth(pro);
+    }
+
+    private void loadBase(Properties pro) {
+        String value;
 
         value = pro.getProperty(SDK_SIGNCERT_PATH);
         if (!SdkUtil.isEmpty(value)) {
@@ -500,8 +505,10 @@ public class SdkConfig {
         if (!SdkUtil.isEmpty(value)) {
             this.middleCertPath = value.trim();
         }
+    }
 
-        /**缴费部分**/
+    private void loadFee(Properties pro) {
+        String value;
         value = pro.getProperty(JF_SDK_FRONT_TRANS_URL);
         if (!SdkUtil.isEmpty(value)) {
             this.jfFrontRequestUrl = value.trim();
@@ -541,8 +548,10 @@ public class SdkConfig {
         if (!SdkUtil.isEmpty(value)) {
             this.qrcB2cMerBackTransUrl = value.trim();
         }
+    }
 
-        /**综合认证**/
+    private void loadAuth(Properties pro) {
+        String value;
         value = pro.getProperty(ZHRZ_SDK_FRONT_TRANS_URL);
         if (!SdkUtil.isEmpty(value)) {
             this.zhrzFrontRequestUrl = value.trim();
@@ -581,7 +590,7 @@ public class SdkConfig {
         value = pro.getProperty(SDK_IF_VALIDATE_CN_NAME);
         if (!SdkUtil.isEmpty(value)) {
             if (SdkConstants.FALSE_STRING.equals(value.trim())) {
-                this.ifValidateCNName = false;
+                this.ifValidateCnName = false;
             }
         }
 
@@ -823,12 +832,12 @@ public class SdkConfig {
         this.middleCertPath = middleCertPath;
     }
 
-    public boolean isIfValidateCNName() {
-        return ifValidateCNName;
+    public boolean isIfValidateCnName() {
+        return ifValidateCnName;
     }
 
-    public void setIfValidateCNName(boolean ifValidateCNName) {
-        this.ifValidateCNName = ifValidateCNName;
+    public void setIfValidateCnName(boolean ifValidateCnName) {
+        this.ifValidateCnName = ifValidateCnName;
     }
 
     public boolean isIfValidateRemoteCert() {

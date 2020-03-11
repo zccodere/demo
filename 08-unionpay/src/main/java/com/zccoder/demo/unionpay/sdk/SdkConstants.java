@@ -1,11 +1,9 @@
 package com.zccoder.demo.unionpay.sdk;
 
 /**
- * 标题：SDK常量<br>
- * 描述：acp sdk 常量类<br>
- * 时间：2018/09/27<br>
+ * acp sdk 常量类
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
 public class SdkConstants {
 
@@ -497,8 +495,7 @@ public class SdkConstants {
      */
     public static final String PARAM_MER_NOTE = "merNote";
     /**
-     * 请求方保留域.
-     * // 新增接口
+     * 请求方保留域. // 新增接口
      */
     public static final String PARAM_REQ_RESERVED = "reqReserved";
     /**

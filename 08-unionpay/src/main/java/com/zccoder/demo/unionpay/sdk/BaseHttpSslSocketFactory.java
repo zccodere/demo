@@ -1,47 +1,50 @@
 package com.zccoder.demo.unionpay.sdk;
 
-import javax.net.ssl.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.security.cert.X509Certificate;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 /**
- * 标题：忽略验证ssl证书<br>
- * 描述：忽略验证ssl证书<br>
- * 时间：2018/09/27<br>
+ * 忽略验证ssl证书
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
 public class BaseHttpSslSocketFactory extends SSLSocketFactory {
-    private SSLContext getSSLContext() {
-        return createEasySSLContext();
+
+    private SSLContext getSslContext() {
+        return createEasySslContext();
     }
 
     @Override
     public Socket createSocket(InetAddress arg0, int arg1, InetAddress arg2,
                                int arg3) throws IOException {
-        return getSSLContext().getSocketFactory().createSocket(arg0, arg1,
+        return getSslContext().getSocketFactory().createSocket(arg0, arg1,
                 arg2, arg3);
     }
 
     @Override
     public Socket createSocket(String arg0, int arg1, InetAddress arg2, int arg3)
-            throws IOException, UnknownHostException {
-        return getSSLContext().getSocketFactory().createSocket(arg0, arg1,
+            throws IOException {
+        return getSslContext().getSocketFactory().createSocket(arg0, arg1,
                 arg2, arg3);
     }
 
     @Override
     public Socket createSocket(InetAddress arg0, int arg1) throws IOException {
-        return getSSLContext().getSocketFactory().createSocket(arg0, arg1);
+        return getSslContext().getSocketFactory().createSocket(arg0, arg1);
     }
 
     @Override
-    public Socket createSocket(String arg0, int arg1) throws IOException,
-            UnknownHostException {
-        return getSSLContext().getSocketFactory().createSocket(arg0, arg1);
+    public Socket createSocket(String arg0, int arg1) throws IOException {
+        return getSslContext().getSocketFactory().createSocket(arg0, arg1);
     }
 
     @Override
@@ -59,11 +62,11 @@ public class BaseHttpSslSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket(Socket arg0, String arg1, int arg2, boolean arg3)
             throws IOException {
-        return getSSLContext().getSocketFactory().createSocket(arg0, arg1,
+        return getSslContext().getSocketFactory().createSocket(arg0, arg1,
                 arg2, arg3);
     }
 
-    private SSLContext createEasySSLContext() {
+    private SSLContext createEasySslContext() {
         try {
             SSLContext context = SSLContext.getInstance("SSL");
             context.init(null,
@@ -79,7 +82,7 @@ public class BaseHttpSslSocketFactory extends SSLSocketFactory {
 
         static MyX509TrustManager manger = new MyX509TrustManager();
 
-        public MyX509TrustManager() {
+        MyX509TrustManager() {
         }
 
         @Override

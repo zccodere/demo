@@ -5,40 +5,41 @@ import com.zccoder.demo.unionpay.sdk.LogUtil;
 import com.zccoder.demo.unionpay.sdk.SdkConstants;
 import com.zccoder.demo.unionpay.service.Consumer;
 import com.zccoder.demo.unionpay.service.ConsumerUndo;
-import com.zccoder.demo.unionpay.service.bo.ConsumerReqBO;
-import com.zccoder.demo.unionpay.service.bo.ConsumerUndoReqBO;
+import com.zccoder.demo.unionpay.service.bo.ConsumerReqBo;
+import com.zccoder.demo.unionpay.service.bo.ConsumerUndoReqBo;
 import com.zccoder.demo.unionpay.util.HtmlUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * 标题：支付 Controller<br>
- * 描述：支付 Controller<br>
- * 时间：2018/09/26<br>
+ * 支付 Controller
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 @Controller
 @RequestMapping("/pay")
 public class PayController {
+
     @Autowired
     private Consumer consumer;
     @Autowired
     private ConsumerUndo consumerUndo;
 
     @RequestMapping("/order/result")
-    public ModelAndView orderResult(HttpServletRequest request)throws Exception{
-        ModelAndView modelAndView = new ModelAndView("order/payresult");
+    public ModelAndView orderResult(HttpServletRequest request) throws Exception {
+        ModelAndView modelAndView = new ModelAndView("order/pay-result");
 
         LogUtil.writeLog("前台接收报文返回开始");
 
@@ -50,23 +51,28 @@ public class PayController {
         // 打印请求报文
         LogUtil.printRequestLog(respParam);
 
-        Map<String, String> valideData = null;
-        StringBuffer page = new StringBuffer();
-        if (null != respParam && !respParam.isEmpty()) {
+        Map<String, String> validData = new HashMap<>(16);
+        StringBuilder page = new StringBuilder();
+        if (!respParam.isEmpty()) {
             Iterator<Map.Entry<String, String>> it = respParam.entrySet()
                     .iterator();
-            valideData = new HashMap<String, String>(respParam.size());
+            validData = new HashMap<>(respParam.size());
             while (it.hasNext()) {
                 Map.Entry<String, String> e = it.next();
-                String key = (String) e.getKey();
-                String value = (String) e.getValue();
+                String key = e.getKey();
+                String value = e.getValue();
                 value = new String(value.getBytes(encoding), encoding);
-                page.append("<tr><td width=\"30%\" align=\"right\">" + key
-                        + "(" + key + ")</td><td>" + value + "</td></tr>");
-                valideData.put(key, value);
+                page.append("<tr><td width=\"30%\" align=\"right\">")
+                        .append(key)
+                        .append("(")
+                        .append(key)
+                        .append(")</td><td>")
+                        .append(value)
+                        .append("</td></tr>");
+                validData.put(key, value);
             }
         }
-        if (!AcpService.validate(valideData, encoding)) {
+        if (!AcpService.validate(validData, encoding)) {
             page.append("<tr><td width=\"30%\" align=\"right\">验证签名结果</td><td>失败</td></tr>");
             LogUtil.writeLog("验证签名结果[失败].");
             modelAndView.addObject("result", page.toString());
@@ -76,19 +82,20 @@ public class PayController {
         page.append("<tr><td width=\"30%\" align=\"right\">验证签名结果</td><td>成功</td></tr>");
         LogUtil.writeLog("验证签名结果[成功].");
         //其他字段也可用类似方式获取
-        System.out.println(valideData.get("orderId"));
+        System.out.println(validData.get("orderId"));
 
-        String respCode = valideData.get("respCode");
+        String respCode = validData.get("respCode");
+        System.out.println(respCode);
         //判断respCode=00、A6后，对涉及资金类的交易，请再发起查询接口查询，确定交易成功后更新数据库。
 
         // 支付订单ID
-        modelAndView.addObject("payOrderId",valideData.get("orderId"));
+        modelAndView.addObject("payOrderId", validData.get("orderId"));
         // 交易时间
-        modelAndView.addObject("tradeTime",valideData.get("txnTime"));
+        modelAndView.addObject("tradeTime", validData.get("txnTime"));
         // 银联支付流水号
-        modelAndView.addObject("payTransId",valideData.get("queryId"));
+        modelAndView.addObject("payTransId", validData.get("queryId"));
         // 交易说明
-        modelAndView.addObject("message",valideData.get("respMsg"));
+        modelAndView.addObject("message", validData.get("respMsg"));
 
         LogUtil.writeLog("FrontRcvResponse前台接收报文返回结束");
 
@@ -96,7 +103,7 @@ public class PayController {
     }
 
     @RequestMapping("/order")
-    public void order(ConsumerReqBO reqBO, HttpServletResponse response) throws Exception {
+    public void order(ConsumerReqBo reqBO, HttpServletResponse response) throws Exception {
         reqBO.setTxnTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
         System.out.println(reqBO.toString());
         String html = this.consumer.execute(reqBO);
@@ -105,7 +112,7 @@ public class PayController {
     }
 
     @RequestMapping("/order/undo")
-    public void orderUndo(ConsumerUndoReqBO reqBO, HttpServletResponse response)throws Exception {
+    public void orderUndo(ConsumerUndoReqBo reqBO, HttpServletResponse response) throws Exception {
         reqBO.setTxnTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
         System.out.println(reqBO.toString());
         String result = this.consumerUndo.execute(reqBO);

@@ -1,6 +1,11 @@
 package com.zccoder.demo.unionpay.sdk;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,11 +15,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 标题：AcpService<br>
- * 描述：acp sdk 接口服务类，接入商户集成请可以直接参考使用本类中的方法<br>
- * 时间：2018/09/27<br>
+ * acp sdk 接口服务类，接入商户集成请可以直接参考使用本类中的方法
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
 public class AcpService {
 
@@ -23,8 +26,7 @@ public class AcpService {
     private static Pattern patternCertId = Pattern.compile("cert_id=(\\d*)");
 
     /**
-     * 请求报文签名(使用配置文件中配置的私钥证书或者对称密钥签名)<br>
-     * 功能：对请求报文进行签名,并计算赋值certid,signature字段并返回<br>
+     * 请求报文签名(使用配置文件中配置的私钥证书或者对称密钥签名)<br> 功能：对请求报文进行签名,并计算赋值certid,signature字段并返回<br>
      *
      * @param reqData  请求报文map<br>
      * @param encoding 上送请求报文域encoding字段的值<br>
@@ -39,11 +41,6 @@ public class AcpService {
     /**
      * 同signByCertInfo<br>
      *
-     * @param reqData
-     * @param certPath
-     * @param certPwd
-     * @param encoding
-     * @return
      * @deprecated
      */
     public static Map<String, String> sign(Map<String, String> reqData, String certPath,
@@ -54,8 +51,8 @@ public class AcpService {
     }
 
     /**
-     * 多证书签名(通过传入私钥证书路径和密码签名）<br>
-     * 功能：如果有多个商户号接入银联,每个商户号对应不同的证书可以使用此方法:传入私钥证书和密码(并且在acp_sdk.properties中 配置 acpsdk.singleMode=false)<br>
+     * 多证书签名(通过传入私钥证书路径和密码签名）<br> 功能：如果有多个商户号接入银联,每个商户号对应不同的证书可以使用此方法:传入私钥证书和密码(并且在acp_sdk.properties中
+     * 配置 acpsdk.singleMode=false)<br>
      *
      * @param reqData  请求报文map<br>
      * @param certPath 签名私钥文件（带路径）<br>
@@ -71,8 +68,8 @@ public class AcpService {
     }
 
     /**
-     * 多密钥签名(通过传入密钥签名)<br>
-     * 功能：如果有多个商户号接入银联,每个商户号对应不同的证书可以使用此方法:传入私钥证书和密码(并且在acp_sdk.properties中 配置 acpsdk.singleMode=false)<br>
+     * 多密钥签名(通过传入密钥签名)<br> 功能：如果有多个商户号接入银联,每个商户号对应不同的证书可以使用此方法:传入私钥证书和密码(并且在acp_sdk.properties中 配置
+     * acpsdk.singleMode=false)<br>
      *
      * @param reqData   请求报文map<br>
      * @param secureKey 签名对称密钥<br>
@@ -109,10 +106,10 @@ public class AcpService {
 
 
     /**
-     * @param jsonData json格式数据，例如：{"sign" : "J6rPLClQ64szrdXCOtV1ccOMzUmpiOKllp9cseBuRqJ71pBKPPkZ1FallzW18gyP7CvKh1RxfNNJ66AyXNMFJi1OSOsteAAFjF5GZp0Xsfm3LeHaN3j/N7p86k3B1GrSPvSnSw1LqnYuIBmebBkC1OD0Qi7qaYUJosyA1E8Ld8oGRZT5RR2gLGBoiAVraDiz9sci5zwQcLtmfpT5KFk/eTy4+W9SsC0M/2sVj43R9ePENlEvF8UpmZBqakyg5FO8+JMBz3kZ4fwnutI5pWPdYIWdVrloBpOa+N4pzhVRKD4eWJ0CoiD+joMS7+C0aPIEymYFLBNYQCjM0KV7N726LA==",  "data" : "pay_result=success&tn=201602141008032671528&cert_id=68759585097"}
+     * @param jsonData json格式数据，例如：{"sign" : "J6rPLClQ64szrdXCOtV1ccOMzUmpiOKllp9cseBuRqJ71pBKPPkZ1FallzW18gyP7CvKh1RxfNNJ66AyXNMFJi1OSOsteAAFjF5GZp0Xsfm3LeHaN3j/N7p86k3B1GrSPvSnSw1LqnYuIBmebBkC1OD0Qi7qaYUJosyA1E8Ld8oGRZT5RR2gLGBoiAVraDiz9sci5zwQcLtmfpT5KFk/eTy4+W9SsC0M/2sVj43R9ePENlEvF8UpmZBqakyg5FO8+JMBz3kZ4fwnutI5pWPdYIWdVrloBpOa+N4pzhVRKD4eWJ0CoiD+joMS7+C0aPIEymYFLBNYQCjM0KV7N726LA==",
+     *                 "data" : "pay_result=success&tn=201602141008032671528&cert_id=68759585097"}
      * @return 是否成功
-     * @deprecated 5.1.0开发包已删除此方法，请直接参考5.1.0开发包中的VerifyAppData.java验签。
-     * 对控件支付成功返回的结果信息中data域进行验签（控件端获取的应答信息）<br>
+     * @deprecated 5.1.0开发包已删除此方法，请直接参考5.1.0开发包中的VerifyAppData.java验签。 对控件支付成功返回的结果信息中data域进行验签（控件端获取的应答信息）<br>
      */
     public static boolean validateAppResponse(String jsonData, String encoding) {
         LogUtil.writeLog("控件应答信息验签处理开始：[" + jsonData + "]");
@@ -155,21 +152,18 @@ public class AcpService {
     /**
      * 功能：后台交易提交请求报文并接收同步应答报文<br>
      *
-     * @param reqData      请求报文<br>
-     * @param rspData      应答报文<br>
-     * @param reqUrl       请求地址<br>
-     * @param encoding<br>
+     * @param reqData 请求报文<br>
+     * @param reqUrl  请求地址<br>
      * @return 应答http 200返回true ,其他false<br>
      */
-    public static Map<String, String> post(
-            Map<String, String> reqData, String reqUrl, String encoding) {
+    public static Map<String, String> post(Map<String, String> reqData, String reqUrl, String encoding) {
         Map<String, String> rspData = new HashMap<String, String>(64);
         LogUtil.writeLog("请求银联地址:" + reqUrl);
         //发送后台请求数据
         //连接超时时间，读超时时间（可自行判断，修改）
         HttpClient hc = new HttpClient(reqUrl, 30000, 30000);
         try {
-            int status = hc.send(reqData, encoding);
+            int status = hc.sendPost(reqData, encoding);
             int success = 200;
             if (success == status) {
                 String resultString = hc.getResult();
@@ -190,9 +184,7 @@ public class AcpService {
     /**
      * 功能：http Get方法 便民缴费产品中使用<br>
      *
-     * @param reqUrl       请求地址<br>
-     * @param encoding<br>
-     * @return
+     * @param reqUrl 请求地址<br>
      */
     public static String get(String reqUrl, String encoding) {
 
@@ -252,11 +244,9 @@ public class AcpService {
 
 
     /**
-     * 功能：将批量文件内容使用DEFLATE压缩算法压缩，Base64编码生成字符串并返回<br>
-     * 适用到的交易：批量代付，批量代收，批量退货<br>
+     * 功能：将批量文件内容使用DEFLATE压缩算法压缩，Base64编码生成字符串并返回<br> 适用到的交易：批量代付，批量代收，批量退货<br>
      *
      * @param filePath 批量文件-全路径文件名<br>
-     * @return
      */
     public static String enCodeFileContent(String filePath, String encoding) {
         String baseFileContent = "";
@@ -294,8 +284,7 @@ public class AcpService {
     }
 
     /**
-     * 功能：解析交易返回的fileContent字符串并落地 （ 解base64，解DEFLATE压缩并落地）<br>
-     * 适用到的交易：对账文件下载，批量交易状态查询<br>
+     * 功能：解析交易返回的fileContent字符串并落地 （ 解base64，解DEFLATE压缩并落地）<br> 适用到的交易：对账文件下载，批量交易状态查询<br>
      *
      * @param resData       返回报文map<br>
      * @param fileDirectory 落地的文件目录（绝对路径）
@@ -341,8 +330,7 @@ public class AcpService {
     }
 
     /**
-     * 功能：将结果文件内容 转换成明文字符串：解base64,解压缩<br>
-     * 适用到的交易：批量交易状态查询<br>
+     * 功能：将结果文件内容 转换成明文字符串：解base64,解压缩<br> 适用到的交易：批量交易状态查询<br>
      *
      * @param fileContent 批量交易状态查询返回的文件内容<br>
      * @return 内容明文<br>
@@ -361,18 +349,18 @@ public class AcpService {
 
 
     /**
-     * 功能：持卡人信息域customerInfo构造<br>
-     * 说明：不勾选对敏感信息加密权限使用旧的构造customerInfo域方式，不对敏感信息进行加密（对 phoneNo，cvn2， expired不加密），但如果送pin的话则加密<br>
+     * 功能：持卡人信息域customerInfo构造<br> 说明：不勾选对敏感信息加密权限使用旧的构造customerInfo域方式，不对敏感信息进行加密（对 phoneNo，cvn2，
+     * expired不加密），但如果送pin的话则加密<br>
      *
-     * @param customerInfoMap 信息域请求参数 key送域名value送值,必送<br>
-     *                        例如：customerInfoMap.put("certifTp", "01");					//证件类型<br>
-     *                        customerInfoMap.put("certifId", "341126197709218366");	//证件号码<br>
-     *                        customerInfoMap.put("customerNm", "互联网");				//姓名<br>
-     *                        customerInfoMap.put("phoneNo", "13552535506");			//手机号<br>
-     *                        customerInfoMap.put("smsCode", "123456");					//短信验证码<br>
-     *                        customerInfoMap.put("pin", "111111");						//密码（加密）<br>
-     *                        customerInfoMap.put("cvn2", "123");           			//卡背面的cvn2三位数字（不加密）<br>
-     *                        customerInfoMap.put("expired", "1711");  				    //有效期 年在前月在后（不加密)<br>
+     * @param customerInfoMap 信息域请求参数 key送域名value送值,必送<br> 例如：customerInfoMap.put("certifTp",
+     *                        "01");					//证件类型<br> customerInfoMap.put("certifId",
+     *                        "341126197709218366");	//证件号码<br> customerInfoMap.put("customerNm",
+     *                        "互联网");				//姓名<br> customerInfoMap.put("phoneNo",
+     *                        "13552535506");			//手机号<br> customerInfoMap.put("smsCode",
+     *                        "123456");					//短信验证码<br> customerInfoMap.put("pin",
+     *                        "111111");						//密码（加密）<br> customerInfoMap.put("cvn2", "123");
+     *                        //卡背面的cvn2三位数字（不加密）<br> customerInfoMap.put("expired", "1711"); //有效期
+     *                        年在前月在后（不加密)<br>
      * @param accNo           customerInfoMap送了密码那么卡号必送,如果customerInfoMap未送密码pin，此字段可以不送<br>
      * @param encoding        上送请求报文域encoding字段的值<br>
      * @return base64后的持卡人信息域字段<br>
@@ -413,18 +401,17 @@ public class AcpService {
     }
 
     /**
-     * 功能：持卡人信息域customerInfo构造，勾选对敏感信息加密权限 适用新加密规范，对pin和phoneNo，cvn2，expired加密 <br>
-     * 适用到的交易： <br>
+     * 功能：持卡人信息域customerInfo构造，勾选对敏感信息加密权限 适用新加密规范，对pin和phoneNo，cvn2，expired加密 <br> 适用到的交易： <br>
      *
-     * @param customerInfoMap 信息域请求参数 key送域名value送值,必送 <br>
-     *                        例如：customerInfoMap.put("certifTp", "01");					//证件类型 <br>
-     *                        customerInfoMap.put("certifId", "341126197709218366");	//证件号码 <br>
-     *                        customerInfoMap.put("customerNm", "互联网");				//姓名 <br>
-     *                        customerInfoMap.put("smsCode", "123456");					//短信验证码 <br>
-     *                        customerInfoMap.put("pin", "111111");						//密码（加密） <br>
-     *                        customerInfoMap.put("phoneNo", "13552535506");			//手机号（加密） <br>
-     *                        customerInfoMap.put("cvn2", "123");           			//卡背面的cvn2三位数字（加密） <br>
-     *                        customerInfoMap.put("expired", "1711");  				    //有效期 年在前月在后（加密） <br>
+     * @param customerInfoMap 信息域请求参数 key送域名value送值,必送 <br> 例如：customerInfoMap.put("certifTp",
+     *                        "01");					//证件类型 <br> customerInfoMap.put("certifId",
+     *                        "341126197709218366");	//证件号码 <br> customerInfoMap.put("customerNm",
+     *                        "互联网");				//姓名 <br> customerInfoMap.put("smsCode",
+     *                        "123456");					//短信验证码 <br> customerInfoMap.put("pin",
+     *                        "111111");						//密码（加密） <br> customerInfoMap.put("phoneNo",
+     *                        "13552535506");			//手机号（加密） <br> customerInfoMap.put("cvn2", "123");
+     *                        //卡背面的cvn2三位数字（加密） <br> customerInfoMap.put("expired", "1711"); //有效期
+     *                        年在前月在后（加密） <br>
      * @param accNo           customerInfoMap送了密码那么卡号必送,如果customerInfoMap未送密码PIN，此字段可以不送<br>
      * @param encoding        上送请求报文域encoding字段的值
      * @return base64后的持卡人信息域字段 <br>
@@ -477,12 +464,8 @@ public class AcpService {
     }
 
     /**
-     * 解析返回报文（后台通知）中的customerInfo域：<br>
-     * 解base64,如果带敏感信息加密 encryptedInfo 则将其解密并将 encryptedInfo中的域放到customerInfoMap返回<br>
-     *
-     * @param customerInfo<br>
-     * @param encoding<br>
-     * @return
+     * 解析返回报文（后台通知）中的customerInfo域：<br> 解base64,如果带敏感信息加密 encryptedInfo 则将其解密并将
+     * encryptedInfo中的域放到customerInfoMap返回<br>
      */
     public static Map<String, String> parseCustomerInfo(String customerInfo, String encoding) {
         Map<String, String> customerInfoMap = null;
@@ -492,13 +475,13 @@ public class AcpService {
             LogUtil.writeLog("解base64后===>" + customerInfoNoBase64);
             //去掉前后的{}
             customerInfoNoBase64 = customerInfoNoBase64.substring(1, customerInfoNoBase64.length() - 1);
-            customerInfoMap = SdkUtil.parseQString(customerInfoNoBase64);
+            customerInfoMap = SdkUtil.parseResponseString(customerInfoNoBase64);
             String encryptedInfo = "encryptedInfo";
             if (customerInfoMap.containsKey(encryptedInfo)) {
                 String encInfoStr = customerInfoMap.get(encryptedInfo);
                 customerInfoMap.remove(encryptedInfo);
                 String encryptedInfoStr = decryptData(encInfoStr, encoding);
-                Map<String, String> encryptedInfoMap = SdkUtil.parseQString(encryptedInfoStr);
+                Map<String, String> encryptedInfoMap = SdkUtil.parseResponseString(encryptedInfoStr);
                 customerInfoMap.putAll(encryptedInfoMap);
             }
         } catch (UnsupportedEncodingException e) {
@@ -510,12 +493,8 @@ public class AcpService {
     }
 
     /**
-     * 解析返回报文（后台通知）中的customerInfo域：<br>
-     * 解base64,如果带敏感信息加密 encryptedInfo 则将其解密并将 encryptedInfo中的域放到customerInfoMap返回<br>
-     *
-     * @param customerInfo<br>
-     * @param encoding<br>
-     * @return
+     * 解析返回报文（后台通知）中的customerInfo域：<br> 解base64,如果带敏感信息加密 encryptedInfo 则将其解密并将
+     * encryptedInfo中的域放到customerInfoMap返回<br>
      */
     public static Map<String, String> parseCustomerInfo(String customerInfo, String certPath,
                                                         String certPwd, String encoding) {
@@ -526,13 +505,13 @@ public class AcpService {
             LogUtil.writeLog("解base64后===>" + customerInfoNoBase64);
             //去掉前后的{}
             customerInfoNoBase64 = customerInfoNoBase64.substring(1, customerInfoNoBase64.length() - 1);
-            customerInfoMap = SdkUtil.parseQString(customerInfoNoBase64);
+            customerInfoMap = SdkUtil.parseResponseString(customerInfoNoBase64);
             String encryptedInfo = "encryptedInfo";
             if (customerInfoMap.containsKey(encryptedInfo)) {
                 String encInfoStr = customerInfoMap.get(encryptedInfo);
                 customerInfoMap.remove(encryptedInfo);
                 String encryptedInfoStr = decryptData(encInfoStr, certPath, certPwd, encoding);
-                Map<String, String> encryptedInfoMap = SdkUtil.parseQString(encryptedInfoStr);
+                Map<String, String> encryptedInfoMap = SdkUtil.parseResponseString(encryptedInfoStr);
                 customerInfoMap.putAll(encryptedInfoMap);
             }
         } catch (UnsupportedEncodingException e) {
@@ -546,9 +525,8 @@ public class AcpService {
     /**
      * 密码加密并做base64<br>
      *
-     * @param accNo        卡号<br>
-     * @param pwd          密码<br>
-     * @param encoding<br>
+     * @param accNo 卡号<br>
+     * @param pwd   密码<br>
      * @return 加密的内容<br>
      */
     public static String encryptPin(String accNo, String pin, String encoding) {
@@ -559,8 +537,7 @@ public class AcpService {
     /**
      * 敏感信息加密并做base64(卡号，手机号，cvn2,有效期）<br>
      *
-     * @param data         送 phoneNo,cvn2,有效期<br>
-     * @param encoding<br>
+     * @param data 送 phoneNo,cvn2,有效期<br>
      * @return 加密的密文<br>
      */
     public static String encryptData(String data, String encoding) {
@@ -572,7 +549,6 @@ public class AcpService {
      * 敏感信息解密，使用配置文件acp_sdk.properties解密<br>
      *
      * @param base64EncryptedInfo 加密信息<br>
-     * @param encoding<br>
      * @return 解密后的明文<br>
      */
     public static String decryptData(String base64EncryptedInfo, String encoding) {
@@ -586,8 +562,6 @@ public class AcpService {
      * @param base64EncryptedInfo 加密信息<br>
      * @param certPath            私钥文件（带全路径）<br>
      * @param certPwd             私钥密码<br>
-     * @param encoding<br>
-     * @return
      */
     public static String decryptData(String base64EncryptedInfo, String certPath,
                                      String certPwd, String encoding) {
@@ -610,8 +584,6 @@ public class AcpService {
 
     /**
      * 获取敏感信息加密证书的物理序列号<br>
-     *
-     * @return
      */
     public static String getEncryptCertId() {
         return CertUtil.getEncryptCertId();
@@ -620,9 +592,6 @@ public class AcpService {
     /**
      * 对字符串做base64<br>
      *
-     * @param rawStr<br>
-     * @param encoding<br>
-     * @throws IOException
      * @return<br>
      */
     public static String base64Encode(String rawStr, String encoding) throws IOException {
@@ -633,9 +602,6 @@ public class AcpService {
     /**
      * 对base64的字符串解base64<br>
      *
-     * @param base64Str<br>
-     * @param encoding<br>
-     * @throws IOException
      * @return<br>
      */
     public static String base64Decode(String base64Str, String encoding) throws IOException {
@@ -645,14 +611,12 @@ public class AcpService {
 
 
     /**
-     * 有卡交易信息域(cardTransData)构造<br>
-     * 所有子域需用“{}”包含，子域间以“&”符号链接。格式如下：{子域名1=值&子域名2=值&子域名3=值}<br>
+     * 有卡交易信息域(cardTransData)构造<br> 所有子域需用“{}”包含，子域间以“&”符号链接。格式如下：{子域名1=值&子域名2=值&子域名3=值}<br>
      * 说明：本示例仅供参考，开发时请根据接口文档中的报文要素组装<br>
      *
      * @param cardTransDataMap cardTransData的数据<br>
      * @param requestData      必须包含merId、orderId、txnTime、txnAmt，磁道加密时需要使用<br>
      * @param encoding         编码<br>
-     * @return
      */
     public static String getCardTransData(Map<String, String> cardTransDataMap,
                                           Map<String, String> requestData,
@@ -693,12 +657,9 @@ public class AcpService {
     }
 
     /**
-     * 获取应答报文中的加密公钥证书,并存储到本地,备份原始证书,并自动替换证书<br>
-     * 更新成功则返回1，无更新返回0，失败异常返回-1<br>
+     * 获取应答报文中的加密公钥证书,并存储到本地,备份原始证书,并自动替换证书<br> 更新成功则返回1，无更新返回0，失败异常返回-1<br>
      *
-     * @param resData  返回报文
-     * @param encoding
-     * @return
+     * @param resData 返回报文
      */
     public static int updateEncryptCert(Map<String, String> resData,
                                         String encoding) {
@@ -707,9 +668,6 @@ public class AcpService {
 
     /**
      * 获取
-     *
-     * @param number
-     * @return
      */
     public static int genLuhn(String number) {
         return SecureUtil.genLuhn(number);

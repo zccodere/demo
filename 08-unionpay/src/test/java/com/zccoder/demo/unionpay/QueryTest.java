@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zccoder.demo.unionpay.constant.UnionpayConstants;
 import com.zccoder.demo.unionpay.sdk.AcpService;
 import com.zccoder.demo.unionpay.sdk.SdkConfig;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,11 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 标题：交易状态查询接口测试<br>
- * 描述：交易状态查询接口测试<br>
- * 时间：2018/09/29<br>
+ * 交易状态查询接口测试
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 public class QueryTest {
 
@@ -76,7 +75,7 @@ public class QueryTest {
      * @param txnTime 商户订单发送时间（格式：YYYYMMDDhhmmss）
      * @return 查询结果
      */
-    public Map<String, String> query(String orderId, String txnTime) {
+    private Map<String, String> query(String orderId, String txnTime) {
         String txnType = "00";
         String txnSubType = "00";
         String merId = "777290058163386";

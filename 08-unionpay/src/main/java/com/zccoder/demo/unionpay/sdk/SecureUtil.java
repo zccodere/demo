@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.crypto.digests.SM3Digest;
 
 import javax.crypto.Cipher;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -12,13 +13,12 @@ import java.security.PublicKey;
 import java.security.Signature;
 
 /**
- * 标题：SecureUtil<br>
- * 描述：acp sdk 安全算法工具类<br>
- * 时间：2018/09/27<br>
+ * SecureUtil；acp sdk 安全算法工具类
  *
- * @author zc
+ * @author zc 2018-09-27
  **/
-public class SecureUtil {
+class SecureUtil {
+
     /**
      * 算法常量： SHA1
      */
@@ -194,7 +194,6 @@ public class SecureUtil {
      *
      * @param datas    待计算的数据
      * @param encoding 字符集编码
-     * @return
      */
     private static byte[] sha1(String datas, String encoding) {
         try {
@@ -210,7 +209,6 @@ public class SecureUtil {
      *
      * @param datas    待计算的数据
      * @param encoding 字符集编码
-     * @return
      */
     private static byte[] sha256(String datas, String encoding) {
         try {
@@ -226,7 +224,6 @@ public class SecureUtil {
      *
      * @param datas    待计算的数据
      * @param encoding 字符集编码
-     * @return
      */
     private static byte[] sm3(String datas, String encoding) {
         try {
@@ -238,10 +235,7 @@ public class SecureUtil {
     }
 
     /**
-     * @param privateKey
-     * @param data
-     * @return
-     * @throws Exception
+     *
      */
     public static byte[] signBySoft(PrivateKey privateKey, byte[] data)
             throws Exception {
@@ -254,10 +248,7 @@ public class SecureUtil {
     }
 
     /**
-     * @param privateKey
-     * @param data
-     * @return
-     * @throws Exception
+     *
      */
     public static byte[] signBySoft256(PrivateKey privateKey, byte[] data)
             throws Exception {
@@ -291,7 +282,6 @@ public class SecureUtil {
      * @param dataString 待处理数据
      * @param encoding   字符编码
      * @param key        公钥
-     * @return
      */
     public static String encryptData(String dataString, String encoding,
                                      PublicKey key) {
@@ -312,14 +302,13 @@ public class SecureUtil {
      * @param dataString 待处理数据
      * @param encoding   字符编码
      * @param key        公钥
-     * @return
      */
     public static String encryptPin(String accNo, String pin, String encoding,
                                     PublicKey key) {
         /** 使用公钥对密码加密 **/
         byte[] data = null;
         try {
-            data = pin2PinBlockWithCardNO(pin, accNo);
+            data = pin2PinBlockWithCardNo(pin, accNo);
             data = encryptData(key, data);
             return new String(SecureUtil.base64Encode(data), encoding);
         } catch (Exception e) {
@@ -354,7 +343,6 @@ public class SecureUtil {
      *
      * @param inputByte 待解码数据
      * @return 解码后的数据
-     * @throws IOException
      */
     public static byte[] base64Decode(byte[] inputByte) throws IOException {
         return Base64.decodeBase64(inputByte);
@@ -365,7 +353,6 @@ public class SecureUtil {
      *
      * @param inputByte 待编码数据
      * @return 解码后的数据
-     * @throws IOException
      */
     public static byte[] base64Encode(byte[] inputByte) throws IOException {
         return Base64.encodeBase64(inputByte);
@@ -373,11 +360,6 @@ public class SecureUtil {
 
     /**
      * 加密除pin之外的其他信息
-     *
-     * @param publicKey
-     * @param plainData
-     * @return
-     * @throws Exception
      */
     private static byte[] encryptData(PublicKey publicKey, byte[] plainData)
             throws Exception {
@@ -391,10 +373,7 @@ public class SecureUtil {
     }
 
     /**
-     * @param privateKey
-     * @param cryptPin
-     * @return
-     * @throws Exception
+     *
      */
     private static byte[] decryptData(PrivateKey privateKey, byte[] data)
             throws Exception {
@@ -409,8 +388,7 @@ public class SecureUtil {
     }
 
     /**
-     * @param aPin
-     * @return
+     *
      */
     private static byte[] pin2PinBlock(String aPin) {
         int tTemp = 1;
@@ -465,8 +443,7 @@ public class SecureUtil {
     }
 
     /**
-     * @param aPan
-     * @return
+     *
      */
     private static byte[] formatPan(String aPan) {
         int tPanLen = aPan.length();
@@ -486,19 +463,14 @@ public class SecureUtil {
         return tByte;
     }
 
-    /**
-     * @param aPin
-     * @param aCardNO
-     * @return
-     */
-    private static byte[] pin2PinBlockWithCardNO(String aPin, String aCardNO) {
+    private static byte[] pin2PinBlockWithCardNo(String aPin, String aCardNo) {
         byte[] tPinByte = pin2PinBlock(aPin);
-        if (aCardNO.length() == NUMBER_ELEVEN) {
-            aCardNO = "00" + aCardNO;
-        } else if (aCardNO.length() == NUMBER_TWELVE) {
-            aCardNO = "0" + aCardNO;
+        if (aCardNo.length() == NUMBER_ELEVEN) {
+            aCardNo = "00" + aCardNo;
+        } else if (aCardNo.length() == NUMBER_TWELVE) {
+            aCardNo = "0" + aCardNo;
         }
-        byte[] tPanByte = formatPan(aCardNO);
+        byte[] tPanByte = formatPan(aCardNo);
         byte[] tByte = new byte[8];
         for (int i = 0; i < NUMBER_EIGHT; i++) {
             tByte[i] = (byte) (tPinByte[i] ^ tPanByte[i]);
@@ -508,9 +480,6 @@ public class SecureUtil {
 
     /**
      * luhn算法
-     *
-     * @param number
-     * @return
      */
     public static int genLuhn(String number) {
         number = number + "0";

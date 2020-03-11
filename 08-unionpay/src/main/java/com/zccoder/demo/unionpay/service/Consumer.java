@@ -4,7 +4,8 @@ import com.zccoder.demo.unionpay.constant.UnionpayConstants;
 import com.zccoder.demo.unionpay.sdk.AcpService;
 import com.zccoder.demo.unionpay.sdk.LogUtil;
 import com.zccoder.demo.unionpay.sdk.SdkConfig;
-import com.zccoder.demo.unionpay.service.bo.ConsumerReqBO;
+import com.zccoder.demo.unionpay.service.bo.ConsumerReqBo;
+
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -12,16 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 标题：消费服务（支付订单）<br>
- * 描述：消费服务（支付订单）<br>
- * 时间：2018/09/26<br>
+ * 标题：消费服务（支付订单）
  *
- * @author zc
+ * @author zc 2018-09-26
  **/
 @Service
 public class Consumer {
 
-    public String execute(ConsumerReqBO reqBO) {
+    public String execute(ConsumerReqBo reqBO) {
 
         SdkConfig.getConfig().loadPropertiesFromSrc();
 
