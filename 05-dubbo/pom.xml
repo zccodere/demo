@@ -15,15 +15,15 @@
 
     <modules>
         <module>05-dubbo-common</module>
-        <module>05-dubbo-dao</module>
-        <module>05-dubbo-service-api</module>
-        <module>05-dubbo-service</module>
-        <module>05-dubbo-rest</module>
-        <module>05-dubbo-web</module>
+        <module>05-dubbo-api</module>
+        <module>05-dubbo-provider</module>
+        <module>05-dubbo-consumer</module>
     </modules>
 
     <properties>
-        <spring.boot.version>1.5.0.RELEASE</spring.boot.version>
+        <dubbo.version>2.7.5</dubbo.version>
+        <zookeeper.versopn>3.4.14</zookeeper.versopn>
+        <curator.version>4.0.1</curator.version>
     </properties>
 
     <dependencyManagement>
@@ -34,6 +34,43 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

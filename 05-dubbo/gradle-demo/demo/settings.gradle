@@ -1,5 +1,5 @@
 include 'demo-common'
 include 'demo-dao'
 include 'demo-service'
-include 'demo-rest'
+include 'demo-consumer'
 include 'demo-web'

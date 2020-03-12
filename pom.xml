@@ -44,6 +44,9 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <spring.version>5.1.14.RELEASE</spring.version>
         <spring.boot.version>2.1.13.RELEASE</spring.boot.version>
         <spring.cloud.version>Greenwich.SR5</spring.cloud.version>
@@ -52,6 +55,7 @@
 
         <commons.io.version>2.6</commons.io.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
+        <commons.collections4.version>4.4</commons.collections4.version>
 
         <fastjson.version>1.2.66</fastjson.version>
     </properties>
