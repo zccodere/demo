@@ -71,3 +71,7 @@ SpringBoot在Controller中使用Java8的LocalDate或LocalDateTime接收日期时
 ### 2020021801：17-image
 
 使用 BufferedImage 合并图片
+
+### 2020040901：18-face
+
+使用阿里云视觉智能开发平台产品实现人脸对比

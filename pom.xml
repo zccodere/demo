@@ -41,6 +41,7 @@
 
         <module>16-script</module>
         <module>17-image</module>
+        <module>18-face</module>
     </modules>
 
     <properties>
