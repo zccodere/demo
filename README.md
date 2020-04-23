@@ -4,74 +4,74 @@
 
 # 目录 
 
-### 2018062201：01-redis-mq<br>
+### 01-redis<br>
 
-使用Spring Boot 和 Redis 实现消息发布订阅
+* 2018062201：使用 Redis 实现消息发布订阅
 
-### 2018062801：02-spring<br>
+### 02-spring<br>
 
-使用FactoryBean创建Bean、@Enable动态注册Bean、结合FactoryBean、@Enable、策略模式开发插件
+* 2018062801：使用FactoryBean创建Bean、@Enable动态注册Bean、结合FactoryBean、@Enable、策略模式开发插件
 
-### 2018070501：03-log4j2<br>
+### 03-log4j2<br>
 
-log4j2 配置学习
+* 2018070501：log4j2 配置学习
 
-### 2018070601：04-fastdfs<br>
+### 04-fastdfs<br>
 
-使用Spring Boot集成FastDFS
+* 2018070601：使用Spring Boot集成FastDFS
 
-### 2017091501：05-dubbo<br>
+### 05-dubbo<br>
 
-使用Spring Boot集成Dubbo、JPA简化数据访问
+* 2017091501：使用Spring Boot集成Dubbo、JPA简化数据访问
 
-### 2018092101：06-sftp<br>
+### 06-sftp<br>
 
-Java通过SFTP上传文件
+* 018092101：Java通过SFTP上传文件
 
-### 2017032001：07-spring-aop<br>
+### 07-spring-aop<br>
 
-Spring AOP 打印日志、参数校验或权限校验
+* 2017032001：Spring AOP 打印日志、参数校验或权限校验
 
-### 2018092601：08-unionpay<br>
+### 08-unionpay<br>
 
-银联网关支付Demo
+* 2018092601：银联网关支付Demo
 
-### 2018092701：09-pay<br>
+### 09-pay<br>
 
-封装不同支付方式提供统一支付能力
+* 2018092701：封装不同支付方式提供统一支付能力
 
-### 2018100901：10-cloud<br>
+### 10-cloud<br>
 
-Spring Cloud 简单 Demo
+* 2018100901：Spring Cloud 简单 Demo
 
-### 2018101601：11-spring-schema<br>
+### 11-spring-schema<br>
 
-基于 Spring Schema 提供自定义配置支持
+* 2018101601：基于 Spring Schema 提供自定义配置支持
 
-### 2019061801：12-nacos
+### 12-nacos
 
-基于 Nacos 实现配置参数动态刷新及服务注册发现
+* 2019061801：基于 Nacos 实现配置参数动态刷新及服务注册发现
 
-### 2019062501：13-es
+### 13-es
 
-使用`elasticsearch-rest-high-level-client`访问`ElasticSearch`
+* 2019062501：使用`elasticsearch-rest-high-level-client`访问`ElasticSearch`
 
-### 2019083001：14-time
+### 14-time
 
-SpringBoot在Controller中使用Java8的LocalDate或LocalDateTime接收日期时间
+* 2019083001：SpringBoot在Controller中使用Java8的LocalDate或LocalDateTime接收日期时间
 
-### 2019112601：15-task
+### 15-task
 
-使用单独线程一直不停的跑业务服务
+* 2019112601：使用单独线程一直不停的跑业务服务
 
-### 2019120501：16-script
+### 16-script
 
-基于Jfinal通过单元测试跑脚本任务
+* 2019120501：基于Jfinal通过单元测试跑脚本任务
 
-### 2020021801：17-image
+### 17-image
 
-使用 BufferedImage 合并图片
+* 2020021801：使用 BufferedImage 合并图片
 
-### 2020040901：18-face
+### 18-face
 
-使用阿里云视觉智能开发平台产品实现人脸对比
+* 2020040901：使用阿里云视觉智能开发平台产品实现人脸对比
