@@ -2,13 +2,13 @@ package com.zccoder.demo.redis.mq.jedis.config;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.Protocol;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Protocol;
 
 /**
  * 创建 Redis 连接

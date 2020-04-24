@@ -21,7 +21,7 @@
     </mailingLists>
 
     <modules>
-        <module>01-redis-mq</module>
+        <module>01-redis</module>
         <module>02-spring</module>
         <module>03-log4j2</module>
         <module>04-fastdfs</module>
