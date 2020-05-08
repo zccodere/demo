@@ -43,6 +43,7 @@
         <module>17-image</module>
         <module>18-face</module>
         <module>19-retry</module>
+        <module>20-mongodb</module>
     </modules>
 
     <properties>
