@@ -44,6 +44,8 @@
         <module>18-face</module>
         <module>19-retry</module>
         <module>20-mongodb</module>
+
+        <module>21-excel</module>
     </modules>
 
     <properties>
