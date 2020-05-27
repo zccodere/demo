@@ -119,15 +119,17 @@ public class ExeclApplication {
                         if (b < 100) {
                             throw new RuntimeException("手动随机异常");
                         }
-                        excelWriter.write(responseTemp.getDataList(), writeSheet);
+                        // 只有任务执行无异常时，才写入Excel
+                        if (countDownLatch.getCount() > 0) {
+                            excelWriter.write(responseTemp.getDataList(), writeSheet);
+                        }
+                        semaphore.release();
                     } catch (Exception e) {
                         countDownLatch.countDown();
                         dealStatus.setMessage(Thread.currentThread().getName() + "：导出任务执行异常，详细信息：" + e.getMessage());
                         if (!(e instanceof InterruptedException)) {
                             e.printStackTrace();
                         }
-                    } finally {
-                        semaphore.release();
                     }
                 });
             }
