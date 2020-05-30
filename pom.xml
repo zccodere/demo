@@ -46,6 +46,7 @@
         <module>20-mongodb</module>
 
         <module>21-excel</module>
+        <module>22-plugin</module>
     </modules>
 
     <properties>
