@@ -47,6 +47,7 @@
 
         <module>21-excel</module>
         <module>22-plugin</module>
+        <module>23-jwt</module>
     </modules>
 
     <properties>
