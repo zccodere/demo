@@ -15,7 +15,7 @@
         <spring.version>4.3.6.RELEASE</spring.version>
         <aspectj.version>1.8.5</aspectj.version>
         <jsr250.version>1.0</jsr250.version>
-        <commons.io.version>2.3</commons.io.version>
+        <commons.io.version>2.7</commons.io.version>
         <junit.version>4.11</junit.version>
     </properties>
 
